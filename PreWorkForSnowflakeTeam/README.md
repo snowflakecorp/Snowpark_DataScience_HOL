@@ -10,7 +10,7 @@ Option 2: Use their Snowflake account. PRO: Snowpark consumption tied to their a
 [MLPF_Forecast_Data](https://github.com/snowflakecorp/Snowpark_DataScience_HOL/blob/main/PreWorkForSnowflakeTeam/MLPF_Forecasting_Data.md) is needed for Part 2.
 
 # Step 3: Ensure all attendees have data read/write access, can create/register models, and can create SiS applications.
-See this [HOL_SF_Setup](https://github.com/snowflakecorp/Snowpark_DataScience_HOL/blob/main/PreWorkForSnowflakeTeam/HOL_SF_Setup.md)) code to create multiple databases (one per attendee) using cloned data. 
+See this [HOL_SF_Setup](https://github.com/snowflakecorp/Snowpark_DataScience_HOL/blob/main/PreWorkForSnowflakeTeam/HOL_SF_Setup.md) code to create one database with multiple schemas (one per attendee) with cloned data.
 - Update line 34 based on the number of attendees.
 - Update line 35 with the password to assign to each workshop attendee.
 
@@ -41,3 +41,11 @@ alter WAREHOUSE IDENTIFIER('"WH30"') set RESOURCE_MONITOR = 'SNOWPARKIMMERSIONDA
 See the [repo_metal.yaml](https://github.com/snowflakecorp/Snowpark_DataScience_HOL/blob/main/.github/repo_meta.yaml) file for all Python and Snowpark requirements.
 
 If Hex is the selected workshop Python environment, please connect with your local Hex rep. They can help create a Hex account the customer can access. In the US, please contact [Ariel Zahler](aharnik@hex.tech) for assistance. They can provide guidance on how best to share notebook access with the attendees. **Plan ahead**, it still requires some planning to ensure attendees can successfully sign into Hex, duplicate the notebook, and successfully run the Hex notebooks.
+
+# Approximate Snowflake compute and data storage needed to complete this workshop:
+- setup uses <15 credits 
+- running the notebook and SiS app uses <2 credit/attendee
+- data storage uses <50MB
+
+![image](https://github.com/snowflakecorp/Snowpark_DataScience_HOL/assets/120119246/6453de88-01f7-4625-aae2-5c3e71cbcae6)
+
