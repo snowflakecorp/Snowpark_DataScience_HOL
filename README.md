@@ -41,7 +41,7 @@ During this Snowpark Hands-on-Workshop, your customer will:
 ## Recommended Customer Workshop Approach
 ## Days BEFORE the workshop:
 - Identify a Snowpark/HOL expert. Consider reaching out to SE Enablement (Diana Shaw, Chris Jackson, Chris Skirde, Dan Iacono) and/or local FCTO.
-- Meet with your customer with ACCOUNTADMIN access to complete the [PreWork requirements](https://github.com/sfc-gh-DShaw98/Snowpark_DataScience_HOL/blob/main/PreWorkForSnowflakeTeam/README.md)
+- Meet with your customer with ACCOUNTADMIN access to complete the [PreWork requirements](https://github.com/snowflakecorp/Snowpark_DataScience_HOL/tree/main/PreWorkForSnowflakeTeam)
 - Make a copy of this [Snowpark Hands-on-Lab Workshop Deck](https://docs.google.com/presentation/d/1YGm2U-PyNofoA8KRTF7oA9_K046BkNNHOoJ4abhYmnk/edit?usp=sharing) and update for your customer workshop
 
 ## Day of the workshop:
@@ -63,7 +63,8 @@ During this Snowpark Hands-on-Workshop, your customer will:
   - Customer-aligned SE and AE should monitor and respond to the questions and stop the Snowpark/HOL expert as needed.
 
   **Workshop Best Practices: Use a split display to show both the ppt and the notebook.** This helps attendees with a "you are here" map.
-  ![image](https://github.com/sfc-gh-DShaw98/Snowpark_DataScience_HOL/assets/120119246/f9164c8c-767c-4b57-822b-0122795d7e58)
+![image](https://github.com/snowflakecorp/Snowpark_DataScience_HOL/assets/120119246/faaf42bb-fb14-43a9-9b1c-b6e583730c34)
+
 
   **Workshop Best Practices: Pause often and engage the attendees with the following questions:**
   - Does this flow follow their typical data science flow?
@@ -82,9 +83,10 @@ During this Snowpark Hands-on-Workshop, your customer will:
 ## Days/Months AFTER the workshop:
 - Account Team should add newly identify used cases in SFDC
 - SE should track and monitor Snowpark usage. Consider using [Account360](https://a360.snowflake.com/) or the [Snowpark Immersion Day Initiative SiS app](https://app.snowflake.com/sfcogsops/snowhouse_aws_us_west_2/#/streamlit-apps/TEMP.DSHAW.VM4EPAUIQEGBA6M6?ref=snowsight_shared). You will need to use the SALES_ENGINEER role to access.
-- ![image](https://github.com/sfc-gh-DShaw98/Snowpark_DataScience_HOL/assets/120119246/28b68f9e-4b99-4596-9fe7-be639dec06e1)
+![image](https://github.com/snowflakecorp/Snowpark_DataScience_HOL/assets/120119246/3ced26a3-a634-41ff-9230-bd707b4c19f6)
 
-- Option: Enterprise Southeast Team used the following [SiS Snowhouse app](https://app.snowflake.com/sfcogsops/snowhouse_aws_us_west_2/#/streamlit-apps/TEMP.DSHAW.VM4EPAUIQEGBA6M6?ref=snowsight_shared) to track post-workshop Snowpark utilization. Use SALES_ENGINEER role to access. Here is the [SiS app code](https://github.com/sfc-gh-DShaw98/Snowpark_DataScience_HOL/blob/main/PreWorkForSnowflakeTeam/Snowpark_Utilization_SiSapp.py)
+
+- Option: Enterprise Southeast Team used the following [SiS Snowhouse app](https://app.snowflake.com/sfcogsops/snowhouse_aws_us_west_2/#/streamlit-apps/TEMP.DSHAW.VM4EPAUIQEGBA6M6?ref=snowsight_shared) to track post-workshop Snowpark utilization. Use SALES_ENGINEER role to access. Here is the [SiS app code](https://github.com/snowflakecorp/Snowpark_DataScience_HOL/blob/main/ForCustomer/SiS_application.py)
 - Please provide feedback on this workshop to [Diana Shaw](diana.shaw@snowflake.com)
 
 
