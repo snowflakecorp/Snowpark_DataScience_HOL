@@ -8,7 +8,7 @@ This is a **multi-phased end-to-end hands-on Snowpark lab**. It includes prepari
 - **Part 3**: model your data using Snowpark ML APIs
 - **Part 4**: deploy your model using Snowpark ML Model Registry
 - **Part 5**: operationalize your deployed model using [SiS with Snowpark Geospatial features](https://github.com/snowflakecorp/Snowpark_DataScience_HOL/blob/main/ForCustomer/SiS_application.py), st_point and st_distance
-  - When using SiS, remember to include all required SiS packages. Attendees will need to add packages pydeck and snowflake-ml-python. See this video on how to include the plotly package: ![SiS_Add_Package](https://github.com/snowflakecorp/Snowpark_DataScience_HOL/blob/main/ForCustomer/SiS_application.py)
+  - When using SiS, remember to include all required SiS packages. Attendees will need to add packages pydeck and snowflake-ml-python.
 
 ## Have the customer select one (1) Python environment for the workshop that attendees will all use and follow. This is a really critical suggestion based on delivering multiple customer Snowpark workshops. Use one Python tool for the workshop.
 
