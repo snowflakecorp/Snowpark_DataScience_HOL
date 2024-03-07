@@ -83,9 +83,11 @@ call utility.public.loopquery('grant all on all views in schema hol.schemaXXX to
 call utility.public.loopquery('grant all on future views in schema hol.schemaXXX to role roleXXX;', $num_users);
 call utility.public.loopquery('GRANT SELECT ON VIEW hol.schemaXXX.sales_forecast_input TO ROLE roleXXX', $num_users);
 call utility.public.loopquery('GRANT usage ON schema hol.schemaXXX TO ROLE roleXXX', $num_users);
-call utility.public.loopquery('GRANT create notebook ON schema hol.schemaXXX TO ROLE roleXXX', $num_users);
 call utility.public.loopquery('GRANT create stage ON schema hol.schemaXXX TO ROLE roleXXX', $num_users);
 call utility.public.loopquery('GRANT usage ON warehouse whXXX TO ROLE roleXXX', $num_users);
+
+-- if using Snowflake Notebooks, ensure you run the following:
+call utility.public.loopquery('GRANT create notebook ON schema hol.schemaXXX TO ROLE roleXXX', $num_users);
 call utility.public.loopquery('grant create notebook ON schema hol.schemaXXX TO ROLE accountadmin', $num_users);
 
 show users;
