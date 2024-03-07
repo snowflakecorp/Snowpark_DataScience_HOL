@@ -1,5 +1,6 @@
 -- To be shared with your Snowpark Field Marketing team as potential template for attendee registration page invite:
 
+## Snowflake Workshop: End-to-End Data Science using Snowpark
 Join Snowflake on [date] for a 2hr hands-on-lab exclusively built for [Customer Name]!
 
 Snowflake offers several new capabilities supporting Data Engineering and AI/ML use cases. Snowpark is a modern way to mobile data, build apps, and AI with seamless integration to Snowflake’s cloud-based data platform, enabling fast and secure data processing. Data engineers, data scientists and developers can work in their preferred environment to build pipelines and run end-to-end AI/ML all directly within Snowflake. 
