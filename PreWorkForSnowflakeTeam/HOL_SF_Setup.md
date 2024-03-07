@@ -73,7 +73,7 @@ grant usage on warehouse tasty_dsci_wh to role hol_parent;
 call utility.public.loopquery('create or replace warehouse whXXX warehouse_size = \'xsmall\' AUTO_SUSPEND = 300;', $num_users);
 call utility.public.loopquery('grant all on warehouse whXXX to role roleXXX;', $num_users);
 
--- set up the databases and grant permissions
+-- set up the schemas and grant permissions
 call utility.public.loopquery('create or replace schema HOL.schemaXXX clone frostbyte_tasty_bytes_dev.analytics;', $num_users);
 call utility.public.loopquery('grant usage, modify on database HOL to role roleXXX;', $num_users);
 call utility.public.loopquery('grant ownership on schema HOL.schemaXXX to role roleXXX;', $num_users);
@@ -82,10 +82,22 @@ call utility.public.loopquery('grant all on all tables in schema HOL.schemaXXX t
 call utility.public.loopquery('grant all on all views in schema hol.schemaXXX to role roleXXX;', $num_users);
 call utility.public.loopquery('grant all on future views in schema hol.schemaXXX to role roleXXX;', $num_users);
 call utility.public.loopquery('GRANT SELECT ON VIEW hol.schemaXXX.sales_forecast_input TO ROLE roleXXX', $num_users);
+call utility.public.loopquery('GRANT usage ON schema hol.schemaXXX TO ROLE roleXXX', $num_users);
+call utility.public.loopquery('GRANT create notebook ON schema hol.schemaXXX TO ROLE roleXXX', $num_users);
+call utility.public.loopquery('GRANT create stage ON schema hol.schemaXXX TO ROLE roleXXX', $num_users);
+call utility.public.loopquery('GRANT usage ON warehouse whXXX TO ROLE roleXXX', $num_users);
+call utility.public.loopquery('grant create notebook ON schema hol.schemaXXX TO ROLE accountadmin', $num_users);
 
 show users;
+show roles;
+show warehouses;
 ```
-![image](https://github.com/sfc-gh-DShaw98/Snowpark_DataScience_HOL/assets/120119246/8219df1d-952f-49e5-a680-563ea0d0b836)
+![image](https://github.com/snowflakecorp/Snowpark_DataScience_HOL/assets/120119246/8bf7bd8b-9df2-4c80-a7f2-b3ceca90ccf8)
+
+
+
 
 Run this code and ensure the output looks like:
-![image](https://github.com/sfc-gh-DShaw98/Snowpark_DataScience_HOL/assets/120119246/fa4d8977-03af-44e5-b05d-1839ae31c104)
+![image](https://github.com/snowflakecorp/Snowpark_DataScience_HOL/assets/120119246/9c5c510d-bcfb-4401-8ca2-028bad30719c)
+
+
