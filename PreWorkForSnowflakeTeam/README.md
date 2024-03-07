@@ -9,6 +9,8 @@ Option 2: Use their Snowflake account. PRO: Snowpark consumption tied to their a
 
 [MLPF_Forecast_Data](https://github.com/snowflakecorp/Snowpark_DataScience_HOL/blob/main/PreWorkForSnowflakeTeam/MLPF_Forecasting_Data.md) is needed for Part 2.
 
+**If running Snowflake Notebooks, consider loading the images in this repo's ForCustomer/assets directory to a Snowflake Managed Stage. This will ensure the images load in this notebook**
+
 # Step 3: Ensure all attendees have data read/write access, can create/register models, and can create SiS applications.
 See this [HOL_SF_Setup](https://github.com/snowflakecorp/Snowpark_DataScience_HOL/blob/main/PreWorkForSnowflakeTeam/HOL_SF_Setup.md) code to create one database with multiple schemas (one per attendee) with cloned data.
 - Update line 34 based on the number of attendees.
