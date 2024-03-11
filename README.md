@@ -72,7 +72,7 @@ During this Snowpark Hands-on-Workshop, your customer will:
   - Customer-aligned SE and AE should monitor and respond to the questions and stop the Snowpark/HOL expert as needed.
 
   **Workshop Best Practices: Use a split display to show both the ppt and the notebook.** This helps attendees with a "you are here" map.
-![image](https://github.com/snowflakecorp/Snowpark_DataScience_HOL/assets/120119246/faaf42bb-fb14-43a9-9b1c-b6e583730c34)
+<img src="https://github.com/snowflakecorp/Snowpark_DataScience_HOL/assets/120119246/faaf42bb-fb14-43a9-9b1c-b6e583730c34" width=800>
 
 
   **Workshop Best Practices: Pause often and engage the attendees with the following questions:**
@@ -92,7 +92,7 @@ During this Snowpark Hands-on-Workshop, your customer will:
 ## Days/Months AFTER the workshop:
 - Account Team should add newly identify used cases in SFDC
 - SE should track and monitor Snowpark usage. Consider using [Account360](https://a360.snowflake.com/) or the [Snowpark Immersion Day Initiative SiS app](https://app.snowflake.com/sfcogsops/snowhouse_aws_us_west_2/#/streamlit-apps/TEMP.DSHAW.VM4EPAUIQEGBA6M6?ref=snowsight_shared). You will need to use the SALES_ENGINEER role to access.
-![image](https://github.com/snowflakecorp/Snowpark_DataScience_HOL/assets/120119246/3ced26a3-a634-41ff-9230-bd707b4c19f6)
+<img src="https://github.com/snowflakecorp/Snowpark_DataScience_HOL/assets/120119246/3ced26a3-a634-41ff-9230-bd707b4c19f6" width=800>
 
 
 - Option: Enterprise Southeast Team used the following [SiS Snowhouse app](https://app.snowflake.com/sfcogsops/snowhouse_aws_us_west_2/#/streamlit-apps/TEMP.DSHAW.VM4EPAUIQEGBA6M6?ref=snowsight_shared) to track post-workshop Snowpark utilization. Use SALES_ENGINEER role to access. Here is the [SiS app code](https://github.com/snowflakecorp/Snowpark_DataScience_HOL/blob/main/ForCustomer/SiS_application.py)
@@ -102,24 +102,43 @@ During this Snowpark Hands-on-Workshop, your customer will:
 ## Snowpark Data Science Hands-on-Workshop includes two skill-level notebooks for participants to choose from based on your Snowpark and Python experience:
 
 **- Easy Path: directions and code is ready to be executed**
-- [**Snowflake Notebooks link**](https://github.com/sfc-gh-DShaw98/Snowpark_DataScience_HOL/blob/main/ForCustomer/Notebooks/Snowflake_Notebook_EasyPath_app.ipynb) ![Snowflake Easy Path](https://github.com/sfc-gh-DShaw98/Snowpark_DataScience_HOL/assets/120119246/241d436f-f265-4a10-a75e-e6acadee500d)
-  - When using Snowflake Notebooks, ensure you add the following **Packages** _before running the code_. Add **matplotlib**, **plotly**, **seaborn** and **snowflake-ml-python**. <img width="512" alt="image" src="https://github.com/sfc-gh-DShaw98/Snowpark_DataScience_HOL/assets/120119246/b587ec88-5168-466b-bc13-ae58ddf2bd96" width="150">
+- [**Snowflake Notebooks** link](https://github.com/sfc-gh-DShaw98/Snowpark_DataScience_HOL/blob/main/ForCustomer/Notebooks/Snowflake_Notebook_EasyPath_app.ipynb):
+
+
+<img src="https://github.com/snowflakecorp/Snowpark_DataScience_HOL/assets/120119246/facb0eb8-7def-4ee6-b11a-29e8ad8822a5" width=600>
+
+
+
+  - When using Snowflake Notebooks, ensure you add the following **Packages** _before running the code_. Add **matplotlib**, **plotly**, **seaborn** and **snowflake-ml-python**.
+
+  <img src="https://github.com/sfc-gh-DShaw98/Snowpark_DataScience_HOL/assets/120119246/b587ec88-5168-466b-bc13-ae58ddf2bd96" width=350>
 
   
-- Hex [notebook link](https://app.hex.tech/snowflake/hex/749432f0-7366-4875-b51d-18247d9724f0) option: ![EasyPath](https://github.com/sfc-gh-DShaw98/Snowpark_DataScience_HOL/assets/120119246/dba6c410-c3a3-473a-91c6-ebfd1e2dc341)
+- [**Hex** notebook link](https://app.hex.tech/snowflake/hex/749432f0-7366-4875-b51d-18247d9724f0):
+
+<img src="https://github.com/sfc-gh-DShaw98/Snowpark_DataScience_HOL/assets/120119246/dba6c410-c3a3-473a-91c6-ebfd1e2dc341" width=600>
 
   
-- Jupyter [notebook link](https://github.com/sfc-gh-DShaw98/Snowpark_DataScience_HOL/blob/main/ForCustomer/Notebooks/End-to-End%20Data%20Science%20using%20Snowpark%20-%20Easy%20Path.ipynb) option: ![Easy Path](https://github.com/sfc-gh-DShaw98/Snowpark_DataScience_HOL/assets/120119246/79988a20-e518-4518-b025-e92c7e421438)
+- [**Jupyter** notebook link](https://github.com/sfc-gh-DShaw98/Snowpark_DataScience_HOL/blob/main/ForCustomer/Notebooks/End-to-End%20Data%20Science%20using%20Snowpark%20-%20Easy%20Path.ipynb):
+
+<img src="https://github.com/sfc-gh-DShaw98/Snowpark_DataScience_HOL/assets/120119246/79988a20-e518-4518-b025-e92c7e421438" width=600>
 
 
 **- Intermediate Path: directions and some critical code is missing**
-- [**Snowflake Notebooks link**](https://github.com/sfc-gh-DShaw98/Snowpark_DataScience_HOL/blob/main/ForCustomer/Notebooks/Snowflake_Notebook_IntermediatePath_app.ipynb)
+- [**Snowflake Notebooks** link](https://github.com/sfc-gh-DShaw98/Snowpark_DataScience_HOL/blob/main/ForCustomer/Notebooks/Snowflake_Notebook_IntermediatePath_app.ipynb):
 
- ![Snowflake Intermediate Path](https://github.com/sfc-gh-DShaw98/Snowpark_DataScience_HOL/assets/120119246/ad10f4dd-35a1-4426-b9b4-770895c76c04)
-  - When using Snowflake Notebooks, ensure you add the following **Packages** _before running the code_. Add **matplotlib**, **plotly**, **seaborn** and **snowflake-ml-python**. <img width="512" alt="image" src="https://github.com/sfc-gh-DShaw98/Snowpark_DataScience_HOL/assets/120119246/b587ec88-5168-466b-bc13-ae58ddf2bd96" width="150">
+<img src="https://github.com/sfc-gh-DShaw98/Snowpark_DataScience_HOL/assets/120119246/ad10f4dd-35a1-4426-b9b4-770895c76c04" width=600>
+
+  - When using Snowflake Notebooks, ensure you add the following **Packages** _before running the code_. Add **matplotlib**, **plotly**, **seaborn** and **snowflake-ml-python**.
+
+  <img src="https://github.com/sfc-gh-DShaw98/Snowpark_DataScience_HOL/assets/120119246/b587ec88-5168-466b-bc13-ae58ddf2bd96" width=350>
 
   
-- Hex [notebook link](https://app.hex.tech/snowflake/hex/c916014e-667b-4a02-a037-1aa470c5a5fe) option: ![Intermediate_Path](https://github.com/sfc-gh-DShaw98/Snowpark_DataScience_HOL/assets/120119246/d7406579-cb24-40bb-a5bf-bbb4556c3b95)
+- [**Hex** notebook link](https://app.hex.tech/snowflake/hex/c916014e-667b-4a02-a037-1aa470c5a5fe):
+
+<img src="https://github.com/sfc-gh-DShaw98/Snowpark_DataScience_HOL/assets/120119246/d7406579-cb24-40bb-a5bf-bbb4556c3b95" width=600>
 
   
-- Jupyter [notebook link](https://github.com/sfc-gh-DShaw98/Snowpark_DataScience_HOL/blob/main/ForCustomer/Notebooks/End-to-End%20Data%20Science%20using%20Snowpark%20-%20Intermediate%20Path.ipynb) option: ![Intermediate Path](https://github.com/sfc-gh-DShaw98/Snowpark_DataScience_HOL/assets/120119246/9de5a014-2b12-48d6-a433-b2fbaae7498f)
+- [**Jupyter** notebook link](https://github.com/sfc-gh-DShaw98/Snowpark_DataScience_HOL/blob/main/ForCustomer/Notebooks/End-to-End%20Data%20Science%20using%20Snowpark%20-%20Intermediate%20Path.ipynb):
+
+<img src="https://github.com/sfc-gh-DShaw98/Snowpark_DataScience_HOL/assets/120119246/9de5a014-2b12-48d6-a433-b2fbaae7498f" width=600>
