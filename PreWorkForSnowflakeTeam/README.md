@@ -5,12 +5,13 @@ Option 1: Using Snowflake Trial account(s) either one per attendee or one accoun
 Option 2: Use their Snowflake account. PRO: Snowpark consumption tied to their account and they maintain this end-to-end example. CON: plan for how attendees to access the data, create/user model registry, create/use SiS application.
 
 # Step 2: Ensure the following data is loaded in the workshop account
-[Snowpark101_Data](https://github.com/snowflakecorp/Snowpark_DataScience_HOL/blob/main/PreWorkForSnowflakeTeam/Snowpark101_Data.md) is needed for Parts 1, 3, 4 and 5 is **frostbyte_tasty_bytes_v2.analytics.shift_sales**. This is Tasty Bytes VERSION 2 data. If you need additional help to correctly setup this data, go to the [Tasty Bytes - Snowpark 101 for Data Science Quickstart](https://quickstarts.snowflake.com/guide/tasty_bytes_snowpark_101_for_data_science/index.html).
+[Snowpark101_Data](https://github.com/snowflakecorp/Snowpark_DataScience_HOL/blob/main/PreWorkForSnowflakeTeam/Snowpark101_Data.md) is needed for Parts 1, 3, 4 and 5 is **frostbyte_tasty_bytes_v2.analytics.shift_sales**. This is Tasty Bytes VERSION 2 data. If you need additional help to correctly setup this data, go to the [Tasty Bytes - Snowpark 101 for Data Science Quickstart](https://quickstarts.snowflake.com/guide/tasty_bytes_snowpark_101_for_data_science/index.html)
 
 [MLPF_Forecast_Data](https://github.com/snowflakecorp/Snowpark_DataScience_HOL/blob/main/PreWorkForSnowflakeTeam/MLPF_Forecasting_Data.md) is needed for Part 2.
 
 **If running Snowflake Notebooks, consider loading the images in this repo's [ForCustomer/assets](https://github.com/snowflakecorp/Snowpark_DataScience_HOL/tree/main/ForCustomer/assets) directory to a Snowflake Managed Stage. This will ensure the images load in this [Snowflake Notebook with pictures](https://github.com/snowflakecorp/Snowpark_DataScience_HOL/blob/main/ForCustomer/End-to-End%20Data%20Science%20using%20Snowpark%20-%20Presenter%20-%20With%20Images.ipynb)**
-![image](https://github.com/snowflakecorp/Snowpark_DataScience_HOL/assets/120119246/2b3f4824-ff81-4007-afd7-706876cd08dc)
+
+<img src="https://github.com/snowflakecorp/Snowpark_DataScience_HOL/assets/120119246/2b3f4824-ff81-4007-afd7-706876cd08dc" width="600">
 
 
 # Step 3: Ensure all attendees have data read/write access, can create/register models, and can create SiS applications.
@@ -58,5 +59,5 @@ alter WAREHOUSE IDENTIFIER('"WH30"') set RESOURCE_MONITOR = 'SNOWPARKIMMERSIONDA
 - running the notebook and SiS app uses <2 credit/attendee
 - data storage uses <50MB
 
-![image](https://github.com/snowflakecorp/Snowpark_DataScience_HOL/assets/120119246/6453de88-01f7-4625-aae2-5c3e71cbcae6)
+<img src="https://github.com/snowflakecorp/Snowpark_DataScience_HOL/assets/120119246/6453de88-01f7-4625-aae2-5c3e71cbcae6" width="600">
 
