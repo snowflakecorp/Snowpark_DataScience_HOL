@@ -20,7 +20,8 @@ See this [HOL_SF_Setup](https://github.com/snowflakecorp/Snowpark_DataScience_HO
 
 # Step 3 (Optional): Create a BUDGET and/or RESOURCE MONITOR to ensure healthy adoption of this Snowpark Immersion Day Asset
 Create Budget using Snowsight GUI:
-![image](https://github.com/snowflakecorp/Snowpark_DataScience_HOL/assets/120119246/3d36e224-2008-405b-8bab-7234d6ebf249)
+
+<img src="https://github.com/snowflakecorp/Snowpark_DataScience_HOL/assets/120119246/3d36e224-2008-405b-8bab-7234d6ebf249" width="600">
 
 
 Create Budget using code:
@@ -29,7 +30,8 @@ CALL "HOL"."PUBLIC"."SNOWPARKIMMERSIONDAYWORKSHOPBUDGET"!ADD_RESOURCE(SELECT SYS
 ```
 
 Create Resource Monitor using Snowsight GUI:
-![image](https://github.com/snowflakecorp/Snowpark_DataScience_HOL/assets/120119246/3f57245e-e0fc-4c45-b60c-8ce193392afe)
+
+<img src="https://github.com/snowflakecorp/Snowpark_DataScience_HOL/assets/120119246/3f57245e-e0fc-4c45-b60c-8ce193392afe" width="600">
 
 
 Create Resource Monitor using code:
@@ -44,7 +46,7 @@ alter WAREHOUSE IDENTIFIER('"WH30"') set RESOURCE_MONITOR = 'SNOWPARKIMMERSIONDA
 # Step 4: Ensure the Python environment is correctly configured
 See the [repo_metal.yaml](https://github.com/snowflakecorp/Snowpark_DataScience_HOL/blob/main/.github/repo_meta.yaml) file for all Python and Snowpark requirements.
 
-If Hex is the selected workshop Python environment, please connect with your local Hex rep. They can help create a Hex account the customer can access. In the US, please contact [Ariel Zahler](aharnik@hex.tech) for assistance. They can provide guidance on how best to share notebook access with the attendees. **Plan ahead**, it still requires some planning to ensure attendees can successfully sign into Hex, duplicate the notebook, and successfully run the Hex notebooks.
+If Hex is the selected workshop Python environment, please connect with [Ariel Zahler](aharnik@hex.tech) or [Armin Efendic](aefendic@hex.tech) for creating your **dedicated hands-on-lab Hex instance**. This will ensure **GDPR complicance** and **no data leakage** relative to attendee names or email addresses. **Plan ahead**, it still requires some planning to ensure attendees can successfully sign into Hex, duplicate the notebook, and successfully run the Hex notebooks.
 
 # Approximate Snowflake compute and data storage needed to complete this workshop:
 - setup uses <15 credits 
