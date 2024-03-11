@@ -48,8 +48,9 @@ During this Snowpark Hands-on-Workshop, your customer will:
 
 ## Recommended Customer Workshop Approach
 ## Days BEFORE the workshop:
-- Identify a Snowpark/HOL expert. Consider reaching out to SE Enablement (Diana Shaw, Chris Jackson, Chris Skirde, Dan Iacono) and/or local FCTO.
+- Identify a Snowpark/HOL expert. Consider reaching out to SE Enablement (Diana Shaw, Chris Jackson, Chris Skirde, Dan Iacono) and/or local FCTO
 - Meet with your customer with ACCOUNTADMIN access to complete the [PreWork requirements](https://github.com/snowflakecorp/Snowpark_DataScience_HOL/tree/main/PreWorkForSnowflakeTeam)
+- Select one Python environment for the hands-on-lab. Preferred options include Snowflake Notebooks and Hex (see comments above)
 - Make a copy of this [Snowpark Hands-on-Lab Workshop Deck](https://docs.google.com/presentation/d/1YGm2U-PyNofoA8KRTF7oA9_K046BkNNHOoJ4abhYmnk/edit?usp=sharing) and update for your customer workshop
 
 ## Day of the workshop:
