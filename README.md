@@ -12,10 +12,18 @@ The goal of this 2hr+ customer workshop is to help all attendees:
 Snowflake Summit introduced several new capabilities supporting AI/ML using Snowpark. Snowflake has created a “choose your own adventure” hands-on-workshop allowing attendees to fill in missing code to complete an example end-to-end data science project. This multi-phased experience includes hearing from experts and then completing hands-on activities to prepare, model, deploy, and operationalize your data.
 
 During this Snowpark Hands-on-Workshop, your customer will:
-- Leverage Snowflake Notebooks, Hex, Visual Studio Code, or Jupyter notebook to connect to their Snowflake account
+- Leverage **one** of the following Python environments:
+  - **Snowflake Notebooks\***,
+  - **Hex\***,
+  - **Visual Studio Code, Jupyter or another Python IDE of their choice**
+- Choose between an "Easy Path" or "Intermediate Path" based on their Python skills
 - Leverage Snowpark ML APIs to prepare, transform, and model data
 - Apply Snowflake’s new Model Registry to deploy a machine learning model(s)
 - Operationalize model predictions using a Snowflake in Streamlit app
+
+💡 **NOTE: Preferred notebooks are identified with * due to pre-installed packages, simpler user authentication, no local environments, and great for large audiences**. 
+
+⚠ **CAUTION:** If you select VS Code/Jupyter/etc, there is a 100% chance attendees will miss installing required packages. Typically this causes ~50% of HOL time spent getting users started instead of learning about Snowpark and the value of Snowflake. 
 
 # Suggested 2hr Hands-on-Workshop Agenda
 - **Welcome** (Account AE)
