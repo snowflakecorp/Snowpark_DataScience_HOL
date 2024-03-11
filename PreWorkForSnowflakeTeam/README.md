@@ -18,7 +18,17 @@ See this [HOL_SF_Setup](https://github.com/snowflakecorp/Snowpark_DataScience_HO
 - Update line 34 based on the number of attendees.
 - Update line 35 with the password to assign to each workshop attendee.
 
-# Step 3 (Optional): Create a BUDGET and/or RESOURCE MONITOR to ensure healthy adoption of this Snowpark Immersion Day Asset
+
+# Step 4: Ensure the Python environment is correctly configured
+Select **one Python environment** and validate it works correctly. 
+
+Preferred notebooks include Snowflake Notebooks and Hex. Please note that Snowflake Notebooks and Hex have all the required packages pre-installed. They offer simpler user authentication. There are no headaches with local environments. They are great for large audiences. 
+
+If Hex is the selected workshop Python environment, please connect with [Ariel Zahler](aharnik@hex.tech) or [Armin Efendic](aefendic@hex.tech) for creating your **dedicated hands-on-lab Hex instance**. This will ensure **GDPR complicance** and **no data leakage** relative to attendee names or email addresses. **Plan ahead**, it still requires some planning to ensure attendees can successfully sign into Hex, duplicate the notebook, and successfully run the Hex notebooks.
+
+Alternatively, you could select Visual Studio Code, Jupyter or another Python IDE of their choice. Please see this [yaml file](https://github.com/snowflakecorp/Snowpark_DataScience_HOL/blob/main/.github/repo_meta.yaml) for all the required Python and Snowpark packages to be conda or pip installed in the customer Python environment using VS Code/Jupyter/etc.
+
+# Step 5 (Optional): Create a BUDGET and/or RESOURCE MONITOR to ensure healthy adoption of this Snowpark Immersion Day Asset
 Create Budget using Snowsight GUI:
 
 <img src="https://github.com/snowflakecorp/Snowpark_DataScience_HOL/assets/120119246/3d36e224-2008-405b-8bab-7234d6ebf249" width="600">
@@ -42,11 +52,6 @@ alter WAREHOUSE IDENTIFIER('"WH0"') set RESOURCE_MONITOR = 'SNOWPARKIMMERSIONDAY
 (repeat for other WH'n' created)
 alter WAREHOUSE IDENTIFIER('"WH30"') set RESOURCE_MONITOR = 'SNOWPARKIMMERSIONDAYWORKSHOP'
 ```
-
-# Step 4: Ensure the Python environment is correctly configured
-See the [repo_metal.yaml](https://github.com/snowflakecorp/Snowpark_DataScience_HOL/blob/main/.github/repo_meta.yaml) file for all Python and Snowpark requirements.
-
-If Hex is the selected workshop Python environment, please connect with [Ariel Zahler](aharnik@hex.tech) or [Armin Efendic](aefendic@hex.tech) for creating your **dedicated hands-on-lab Hex instance**. This will ensure **GDPR complicance** and **no data leakage** relative to attendee names or email addresses. **Plan ahead**, it still requires some planning to ensure attendees can successfully sign into Hex, duplicate the notebook, and successfully run the Hex notebooks.
 
 # Approximate Snowflake compute and data storage needed to complete this workshop:
 - setup uses <15 credits 
