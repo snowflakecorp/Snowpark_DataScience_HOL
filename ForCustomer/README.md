@@ -30,26 +30,42 @@ The **"Intermediate Path"** is recommended to engage Python-savvy attendees. The
 # Two lab levels are available for participants to choose from based on Snowpark and Python experience:
 
 **- Easy Path: directions and code is ready to be executed**
-- [**Snowflake Notebooks link**](https://github.com/sfc-gh-DShaw98/Snowpark_DataScience_HOL/blob/main/ForCustomer/Notebooks/Snowflake_Notebook_EasyPath_app.ipynb) ![Snowflake Easy Path](https://github.com/sfc-gh-DShaw98/Snowpark_DataScience_HOL/assets/120119246/241d436f-f265-4a10-a75e-e6acadee500d)
-  - When using Snowflake Notebooks, ensure you add the following **Packages** _before running the code_. Add **matplotlib**, **plotly**, **seaborn** and **snowflake-ml-python**. <img width="512" alt="image" src="https://github.com/sfc-gh-DShaw98/Snowpark_DataScience_HOL/assets/120119246/b587ec88-5168-466b-bc13-ae58ddf2bd96" width="150">
+- [**Snowflake Notebooks** link](https://github.com/sfc-gh-DShaw98/Snowpark_DataScience_HOL/blob/main/ForCustomer/Notebooks/Snowflake_Notebook_EasyPath_app.ipynb):
+  
+  <img src="https://github.com/sfc-gh-DShaw98/Snowpark_DataScience_HOL/assets/120119246/241d436f-f265-4a10-a75e-e6acadee500d" width=600>
+  
+  - When using Snowflake Notebooks, ensure you add the following **Packages** _before running the code_. Add **matplotlib**, **plotly**, **seaborn** and **snowflake-ml-python**.
+  
+    <img src="https://github.com/sfc-gh-DShaw98/Snowpark_DataScience_HOL/assets/120119246/b587ec88-5168-466b-bc13-ae58ddf2bd96" width=350>
 
   
-- Hex [notebook link](https://app.hex.tech/snowflake/hex/749432f0-7366-4875-b51d-18247d9724f0) option: ![EasyPath](https://github.com/sfc-gh-DShaw98/Snowpark_DataScience_HOL/assets/120119246/dba6c410-c3a3-473a-91c6-ebfd1e2dc341)
+- [**Hex** notebook link](https://app.hex.tech/snowflake/hex/749432f0-7366-4875-b51d-18247d9724f0):
+
+ <img src="https://github.com/sfc-gh-DShaw98/Snowpark_DataScience_HOL/assets/120119246/dba6c410-c3a3-473a-91c6-ebfd1e2dc341" width=600>
 
   
-- Jupyter [notebook link](https://github.com/sfc-gh-DShaw98/Snowpark_DataScience_HOL/blob/main/ForCustomer/Notebooks/End-to-End%20Data%20Science%20using%20Snowpark%20-%20Easy%20Path.ipynb) option: ![Easy Path](https://github.com/sfc-gh-DShaw98/Snowpark_DataScience_HOL/assets/120119246/79988a20-e518-4518-b025-e92c7e421438)
+- [**Jupyter** notebook link](https://github.com/sfc-gh-DShaw98/Snowpark_DataScience_HOL/blob/main/ForCustomer/Notebooks/End-to-End%20Data%20Science%20using%20Snowpark%20-%20Easy%20Path.ipynb):
+
+  <img src="https://github.com/sfc-gh-DShaw98/Snowpark_DataScience_HOL/assets/120119246/79988a20-e518-4518-b025-e92c7e421438" width=600>
 
 **- Intermediate Path: directions and some critical code is missing**
-- [**Snowflake Notebooks link**](https://github.com/sfc-gh-DShaw98/Snowpark_DataScience_HOL/blob/main/ForCustomer/Notebooks/Snowflake_Notebook_IntermediatePath_app.ipynb)
+- [**Snowflake Notebooks** link](https://github.com/sfc-gh-DShaw98/Snowpark_DataScience_HOL/blob/main/ForCustomer/Notebooks/Snowflake_Notebook_IntermediatePath_app.ipynb):
 
- ![Snowflake Intermediate Path](https://github.com/sfc-gh-DShaw98/Snowpark_DataScience_HOL/assets/120119246/ad10f4dd-35a1-4426-b9b4-770895c76c04)
-  - When using Snowflake Notebooks, ensure you add the following **Packages** _before running the code_. Add **matplotlib**, **plotly**, **seaborn** and **snowflake-ml-python**. <img width="512" alt="image" src="https://github.com/sfc-gh-DShaw98/Snowpark_DataScience_HOL/assets/120119246/b587ec88-5168-466b-bc13-ae58ddf2bd96" width="150">
+ <img src="https://github.com/sfc-gh-DShaw98/Snowpark_DataScience_HOL/assets/120119246/ad10f4dd-35a1-4426-b9b4-770895c76c04" width=600>
+ 
+  - When using Snowflake Notebooks, ensure you add the following **Packages** _before running the code_. Add **matplotlib**, **plotly**, **seaborn** and **snowflake-ml-python**.
+  
+    <img src="https://github.com/sfc-gh-DShaw98/Snowpark_DataScience_HOL/assets/120119246/b587ec88-5168-466b-bc13-ae58ddf2bd96" width=350>
 
   
-- Hex [notebook link](https://app.hex.tech/snowflake/hex/c916014e-667b-4a02-a037-1aa470c5a5fe) option: ![Intermediate_Path](https://github.com/sfc-gh-DShaw98/Snowpark_DataScience_HOL/assets/120119246/d7406579-cb24-40bb-a5bf-bbb4556c3b95)
+- [**Hex** notebook link](https://app.hex.tech/snowflake/hex/c916014e-667b-4a02-a037-1aa470c5a5fe):
+
+  <img src="https://github.com/sfc-gh-DShaw98/Snowpark_DataScience_HOL/assets/120119246/d7406579-cb24-40bb-a5bf-bbb4556c3b95" width=600>
 
   
-- Jupyter [notebook link](https://github.com/sfc-gh-DShaw98/Snowpark_DataScience_HOL/blob/main/ForCustomer/Notebooks/End-to-End%20Data%20Science%20using%20Snowpark%20-%20Intermediate%20Path.ipynb) option: ![Intermediate Path](https://github.com/sfc-gh-DShaw98/Snowpark_DataScience_HOL/assets/120119246/9de5a014-2b12-48d6-a433-b2fbaae7498f)
+- [**Jupyter** notebook link](https://github.com/sfc-gh-DShaw98/Snowpark_DataScience_HOL/blob/main/ForCustomer/Notebooks/End-to-End%20Data%20Science%20using%20Snowpark%20-%20Intermediate%20Path.ipynb):
+
+  <img src="https://github.com/sfc-gh-DShaw98/Snowpark_DataScience_HOL/assets/120119246/9de5a014-2b12-48d6-a433-b2fbaae7498f" width=600>
 
 
 # Please following the following instructions if you are using a Hex notebook for the workshop
@@ -60,37 +76,40 @@ Note: Hex is already configured with all the necessary Python libraries. If you 
 - [Intermediate Path](https://app.hex.tech/snowflake/hex/77904453-b834-455e-936d-c694ee757fe3/latest)
 
 **Step 2:** make a duplicate of the notebook
-- ![step2 1](https://github.com/sfc-gh-DShaw98/Snowpark_DataScience_HOL/assets/120119246/8c5af55d-1a86-4f23-b5eb-d9e27eb1ac97)
+- <img src="https://github.com/sfc-gh-DShaw98/Snowpark_DataScience_HOL/assets/120119246/8c5af55d-1a86-4f23-b5eb-d9e27eb1ac97" width=500>
 
 
 **Step 3:** complete the Hex connection details
-- ![step3_2](https://github.com/sfc-gh-DShaw98/Snowpark_DataScience_HOL/assets/120119246/82b7a63c-021d-4b04-87aa-4a1b55e74a19)
+- <img src="https://github.com/sfc-gh-DShaw98/Snowpark_DataScience_HOL/assets/120119246/82b7a63c-021d-4b04-87aa-4a1b55e74a19" width=500>
 - See [hol_auth.json](https://github.com/sfc-gh-DShaw98/Snowpark_DataScience_HOL/blob/main/hol_auth.json) for Jupyter or other Python IDE connection configuration
-- ![step3 3](https://github.com/sfc-gh-DShaw98/Snowpark_DataScience_HOL/assets/120119246/9ac03d2d-4e75-4d3a-9b42-e451cfced1e8)
+- <img src="https://github.com/snowflakecorp/Snowpark_DataScience_HOL/assets/120119246/3ea7ff52-38a1-47b4-ad1c-a9b6cbd56d62" width=500>
 
 - Name: [enter your Snowflake account]
 - Description: [enter a description]
 - Account name: [enter your Snowflake account identifier. Ensure you use a hyphen "-", not a dot "." in your account identifier.]
   - TIP: Trying to determine your Snowflake account name? Log into Snowflake. Click your account on the bottom left corner. Select the account to expose the details. Click to copy account identifier. Replace the "." with "-". For example, NXAAXGQ.LRB86899 should be NXAAXGQ-LRB86899.
-- Warehouse: HOLxxx_WH
-- Database: HOLxxx
-- Schema: ANALYTICS
+- Warehouse: WHxxx
+- Database: HOL
+- Schema: SCHEMAxxx
 - Username: USERxxx
 - Password: XXXX
-- User role: HOLxxx
+- User role: ROLExxx
 - Integrations: check Snowpark
 - Writeback: check Allow use in writeback cells
   
 **Step 4:** follow the notebook and execute completed code blocks. Run each code block as "Cell only". 
 - To select "Cell only" run mode, go to the bottom right corner of your Hex notebook. Select Run mode. Then select "Cell only".
-![image](https://github.com/sfc-gh-DShaw98/Snowpark_DataScience_HOL/assets/120119246/6b25d27c-91bf-4d74-a25b-04495363ee75)
+
+<img src="https://github.com/sfc-gh-DShaw98/Snowpark_DataScience_HOL/assets/120119246/6b25d27c-91bf-4d74-a25b-04495363ee75" width=350>
+
 - You can also select to "Cell only" run mode for each code block.
-![Hex_run](https://github.com/sfc-gh-DShaw98/Snowpark_DataScience_HOL/assets/120119246/ab9afaf5-386e-4346-b5a2-5173468fa195)
+
+<img src="https://github.com/sfc-gh-DShaw98/Snowpark_DataScience_HOL/assets/120119246/ab9afaf5-386e-4346-b5a2-5173468fa195" width=350>
 
 
 **Step 5:** ensure to update the htk.get_data_connection name to match your Hex connection name
-- ![image](https://github.com/sfc-gh-DShaw98/Snowpark_DataScience_HOL/assets/120119246/49dfbd6b-5cc2-41f2-95e7-ed1895d0b57b)
+- <img src="https://github.com/sfc-gh-DShaw98/Snowpark_DataScience_HOL/assets/120119246/49dfbd6b-5cc2-41f2-95e7-ed1895d0b57b" width=500>
 
 
 **Step 6:** complete missing code each time you see "YOUR TURN"
-- ![Intermediate_Path](https://github.com/sfc-gh-DShaw98/Snowpark_DataScience_HOL/assets/120119246/55bde225-4795-41b4-8128-358c28352449) 
+- <img src="https://github.com/sfc-gh-DShaw98/Snowpark_DataScience_HOL/assets/120119246/55bde225-4795-41b4-8128-358c28352449" width=500>
