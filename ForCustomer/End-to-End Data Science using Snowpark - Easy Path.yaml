@@ -1,0 +1,3411 @@
+schemaVersion: 3
+meta:
+  sourceVersionId: 03acc9ed-7c20-4f94-bce6-71a1218296b2 # DO NOT CHANGE - Hex uses this to match up project versions when reimporting the file
+  description: This is a Snowflake Tasty Bytes extension vignette which showcases new Snowpark ML API and Model Registry features.
+  projectId: 749432f0-7366-4875-b51d-18247d9724f0 # DO NOT CHANGE - Unique ID of the project from which this file was generated
+  title: End-to-End Data Science using Snowpark - Easy Path
+  timezone: null
+  appTheme: SYS_PREF
+  codeLanguage: PYTHON
+  status:
+    name: In Progress
+  categories: []
+  castDecimalsDefault: true
+  logicQueryCacheTimeout: null
+  publishedQueryCacheTimeout: null
+  hexType: PROJECT
+projectAssets:
+  dataConnections: []
+  envVars: []
+  secrets: []
+sharedAssets:
+  secrets: []
+  vcsPackages: []
+  dataConnections: []
+  externalFileIntegrations: []
+cells:
+  - cellType: TEXT
+    cellId: 4a55bcca-9113-4d6f-b9d1-1336a384f974 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      richText:
+        - type: h1
+          children:
+            - text: "Overview: Flow of Snowpark ML API / MLOps Hands-on-Lab"
+        - type: p
+          children:
+            - text: ""
+            - src: /api/v1/file/9461bce8-9d29-4b43-95d6-8a43eb7d8504
+              type: image
+              width: 600
+              children:
+                - text: ""
+            - text: ""
+  - cellType: TEXT
+    cellId: 3c11cdf2-eddd-43c7-bfd7-9a1ee6231e77 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      richText:
+        - type: h2
+          children:
+            - text: Background Information
+        - type: p
+          children:
+            - text: Tasty Bytes is one of the largest food truck networks in the world with localized menu options spread across 30 major cities in 15 countries. 
+            - bold: true
+              text: Tasty Bytes is aiming to achieve 25% YoY sales growth over 5 years.
+        - type: p
+          children:
+            - text: As Tasty Bytes Data Scientists, we have been asked to support this goal by helping our food truck drivers more intelligently pick where to park for shifts. 
+        - type: p
+          children:
+            - bold: true
+              text: |-
+                We want to direct our trucks to locations that are expected to have the highest sales on a given shift.
+                This will maximize our daily revenue across our fleet of trucks.
+        - type: p
+          children:
+            - text: To provide this insight, we will use historical shift sales at each location to build a model. This data has been made available to us in Snowflake.Our model will provide the predicted sales at each location for the upcoming shift.
+  - cellType: TEXT
+    cellId: a9e2367b-f525-4ede-ac00-c78ba59d6d1c # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      richText:
+        - type: paragraph
+          children:
+            - text: ""
+            - src: /api/v1/file/3bd3d323-fd10-4cda-830f-67c8944d9d69
+              type: image
+              width: 600
+              children:
+                - text: ""
+            - text: ""
+  - cellType: TEXT
+    cellId: 109e4010-c281-43be-84bb-b6bb4f59ee60 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      richText:
+        - type: paragraph
+          children:
+            - text: ""
+            - src: /api/v1/file/8b03ca90-fb37-44fe-a812-f245bd216cb4
+              type: image
+              width: 600
+              children:
+                - text: ""
+            - text: ""
+  - cellType: TEXT
+    cellId: d1e15381-fd83-46b2-941c-5d3b79e7bc87 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      richText:
+        - type: h2
+          children:
+            - text: Import Packages
+        - type: p
+          children:
+            - text: |
+                Just like the Python packages we are importing, we will import the Snowpark modules that we need.
+            - bold: true
+              text: Value
+            - text: ": Snowflake modules provide efficient ways to work with data and functions in Snowflake."
+  - cellType: CODE
+    cellId: 5426ec92-c037-45ad-b647-491881ef6de6 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: Libraries
+    config:
+      source: |-
+        # Import Packages
+        import pandas as pd
+        import plotly.express as px
+        import plotly.io as pio
+        import json
+        import sys
+        import cachetools
+        import getpass
+
+        # Import Snowflake modules
+        from snowflake.snowpark import Session
+        import snowflake.snowpark.functions as F
+        import snowflake.snowpark.types as T
+        from snowflake.snowpark import Window
+  - cellType: TEXT
+    cellId: 059958c8-a061-4f48-a7db-6fd49579c9b4 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      richText:
+        - type: h4
+          children:
+            - text: Need to update snowflake-ml-python package to version 1.2.2 to reflect PuPr Model Registry syntax
+  - cellType: CODE
+    cellId: 139fad96-c280-48a8-ad58-43df0bed2e65 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      source: "!pip install snowflake-ml-python==1.2.2"
+  - cellType: TEXT
+    cellId: 228006cf-75f0-4c2e-9553-0f85e0752973 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      richText:
+        - type: h2
+          children:
+            - text: Connect to Snowflake
+        - type: p
+          children:
+            - text: Our assigned HOL Snowflake role, 
+            - code: true
+              text: <ROLEXXX>
+            - text: ", can access the data in your assigned "
+            - code: true
+              text: <SCHEMAXXX>
+            - text:  of the HOL database. We will use your assigned 
+            - code: true
+              text: <WHXXX>
+            - text:  warehouse that has been created as a dedicated compute for data science workloads.We will use these parameters and our Snowflake account credentials to connect to Snowflake and create a Snowpark session. 
+        - type: p
+          children:
+            - bold: true
+              text: "Value:"
+            - text:  Secure and governed.
+  - cellType: TEXT
+    cellId: d6ef2523-904c-41d0-ad4b-6dd64acd59a4 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      richText:
+        - type: h2
+          children:
+            - text: Create your Snowflake data connection called "HOL
+            - code: true
+              text: xxx
+            - text: '"'
+        - type: p
+          children:
+            - text: If you were assigned user
+            - code: true
+              text: xxx
+            - text: ","
+        - type: ul
+          children:
+            - type: li
+              children:
+                - type: lic
+                  children:
+                    - text: set Name as HOL
+                    - code: true
+                      text: xxx
+            - type: li
+              children:
+                - type: lic
+                  children:
+                    - text: set Account as XXX-XXX,
+            - type: li
+              children:
+                - type: lic
+                  children:
+                    - text: set Warehouse as WH
+                    - code: true
+                      text: xxx
+                    - text: ","
+            - type: li
+              children:
+                - type: lic
+                  children:
+                    - text: set Database as HOL,
+            - type: li
+              children:
+                - type: lic
+                  children:
+                    - text: set Schemas as SCHEMA
+                    - code: true
+                      text: xxx
+                    - text: ","
+            - type: li
+              children:
+                - type: lic
+                  children:
+                    - text: set Username as USER
+                    - code: true
+                      text: xxx
+                    - text: ","
+            - type: li
+              children:
+                - type: lic
+                  children:
+                    - text: set Password 
+                    - text: (this is case sensitive)
+                      italic: true
+            - type: li
+              children:
+                - type: lic
+                  children:
+                    - text: set User Role as HOL
+                    - code: true
+                      text: xxx
+        - type: p
+          children:
+            - text: 'For instance, if you were assigned number 1, your data connection is:{ "username": "user1", "password": "test", "account": "XXXX-XXXX", "database": "HOL", "role": "HOL1", "warehouse": "WH1", "schema": "SCHEMA1" }'
+  - cellType: TEXT
+    cellId: 2aeee8cf-1d38-49fd-9889-02f7b89969bf # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      richText:
+        - type: p
+          children:
+            - text: "For instance, if you were assigned number 6, your data connection is:"
+        - type: p
+          children:
+            - text: "If you were assigned user6, "
+        - type: ul
+          children:
+            - type: li
+              children:
+                - type: lic
+                  children:
+                    - text: set Name as HOL6
+            - type: li
+              children:
+                - type: lic
+                  children:
+                    - text: "set Account as XXX-XXX "
+            - type: li
+              children:
+                - type: lic
+                  children:
+                    - text: set Warehouse as WH6
+            - type: li
+              children:
+                - type: lic
+                  children:
+                    - text: set Database as HOL6
+            - type: li
+              children:
+                - type: lic
+                  children:
+                    - text: set Schemas as ANALYTICS
+            - type: li
+              children:
+                - type: lic
+                  children:
+                    - text: use Username & Password for Type
+            - type: li
+              children:
+                - type: lic
+                  children:
+                    - text: set Username as USER6
+            - type: li
+              children:
+                - type: lic
+                  children:
+                    - text: "set Password as XXX "
+                    - text: (this is case sensitive)
+                      italic: true
+            - type: li
+              children:
+                - type: lic
+                  children:
+                    - text: set User Role as ROLE6
+            - type: li
+              children:
+                - type: lic
+                  children:
+                    - text: check Snowpark integration
+            - type: li
+              children:
+                - type: lic
+                  children:
+                    - text: check Allow use in writeback cells
+            - type: li
+              children:
+                - type: lic
+                  children:
+                    - text: select Create connection
+  - cellType: TEXT
+    cellId: 8759df09-92ce-427d-978c-575091964139 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      richText:
+        - type: paragraph
+          children:
+            - text: ""
+            - src: /api/v1/file/857d6840-9629-42a7-bfd6-096bd5e1499a
+              type: image
+              width: 600
+              children:
+                - text: ""
+            - text: ""
+  - cellType: INPUT
+    cellId: 9f8b9029-843f-40e3-9451-176707c88a79 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: Schema
+    config:
+      inputType: TEXT_INPUT
+      name: schema
+      outputType: STRING
+      options: null
+      defaultValue: ""
+  - cellType: INPUT
+    cellId: 81002606-3d07-4a0c-aedf-530a2adb65ad # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: Snowflake compute warehouse
+    config:
+      inputType: TEXT_INPUT
+      name: warehouse
+      outputType: STRING
+      options: null
+      defaultValue: ""
+  - cellType: INPUT
+    cellId: 5f24ade3-719b-42dd-b771-8efda630c16c # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: Hex data connection name
+    config:
+      inputType: TEXT_INPUT
+      name: connection_name
+      outputType: STRING
+      options: null
+      defaultValue: ""
+  - cellType: CODE
+    cellId: 3ebf32b4-bbcc-49aa-84e2-57a5f2b0178c # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: HexConnection
+    config:
+      source: |-
+        # Import Hex's hextoolkit package
+        import hextoolkit as htk
+
+        # Create Snowpark session
+        session = htk.get_data_connection(connection_name).get_snowpark_session()
+  - cellType: TEXT
+    cellId: 8bdaa67c-79c6-475e-a816-98f7e25381e1 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      richText:
+        - type: h1
+          children:
+            - text: Part 1 - Use Snowpark to access and prepare data for modeling
+        - type: p
+          children:
+            - text: ""
+            - src: /api/v1/file/07d4bfc0-6065-459d-825f-1ec188504829
+              type: image
+              width: 600
+              children:
+                - text: ""
+            - text: ""
+  - cellType: TEXT
+    cellId: dda9d478-86b3-4170-b446-c7d1d5a35be2 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      richText:
+        - type: h2
+          children:
+            - text: Snowpark DataFrame
+        - type: p
+          children:
+            - text: Let's create a Snowpark DataFrame containing our shift sales data from the 
+            - bold: true
+              text: shift_sales_v
+            - text:  view in our Snowflake account using the Snowpark session.table function. A DataFrame is a data structure that contains rows and columns, similar to a SQL table.
+        - type: p
+          children:
+            - bold: true
+              text: "Value:"
+            - text:  Familiar representation of data for Python users.
+  - cellType: CODE
+    cellId: 18211f81-70d4-4591-9f09-e909a63da79c # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: Snowpark df
+    config:
+      source: snowpark_df = session.table("HOL." + schema +".SHIFT_SALES_V")
+  - cellType: TEXT
+    cellId: a2f3c2c4-d9ed-4d01-9c6c-02a62804e3a2 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      richText:
+        - type: h2
+          children:
+            - text: Preview the Data
+        - type: p
+          children:
+            - text: |
+                With our Snowpark DataFrame defined, let’s use the .show() function to take a look at the first 10 rows.
+            - bold: true
+              text: "Value:"
+            - text:  Instant access to data.
+  - cellType: CODE
+    cellId: 9ec6a7e2-5a3d-4362-93ab-40c0e83a75d0 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: Show_SnowflakeDF
+    config:
+      source: |-
+        # Preview the data
+        # Use the .show() function to look at the first 10 rows.
+        # VALUE: instant access to data
+        snowpark_df.show()
+  - cellType: TEXT
+    cellId: 8c0561aa-a583-4edc-9ba7-3b1551237178 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      richText:
+        - type: h2
+          children:
+            - text: Select, Filter, Sort
+        - type: p
+          children:
+            - text: "Notice the Null values for \"shift_sales\". Let's look at a single location.To do this, we will make another Snowpark DataFrame, location_df, from the above DataFrame and we will:"
+        - type: ol
+          children:
+            - type: li
+              children:
+                - type: lic
+                  children:
+                    - text: Select columns
+            - type: li
+              children:
+                - type: lic
+                  children:
+                    - text: Filter to a single location ID
+            - type: li
+              children:
+                - type: lic
+                  children:
+                    - text: Sort by date
+        - type: p
+          children:
+            - bold: true
+              text: Value
+            - text: ": Efficient transformation pipelines using Python syntax and chained logic."
+  - cellType: CODE
+    cellId: 5185f577-df5e-497d-81bf-e618909158dd # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      source: |-
+        # Select
+        location_df = snowpark_df.select("date", "shift", "shift_sales", "location_id", "city")
+
+        # Filter
+        location_df = location_df.filter(F.col("location_id") == 1135)
+
+        # Sort
+        location_df = location_df.order_by(["date", "shift"], ascending=[0, 0])
+
+        # Display
+        location_df.show(n=20)
+  - cellType: TEXT
+    cellId: f715530a-ca89-4ada-8f87-41e4cfce288b # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      richText:
+        - type: p
+          children:
+            - text: We can see that shift sales are populated 8 days prior to the latest date in the data. The 
+            - bold: true
+              text: missing values
+            - text:  represent future dates that do not have shift sales yet.
+        - type: h2
+          children:
+            - text: "Snowpark works in two main ways:"
+        - type: ol
+          children:
+            - type: li
+              children:
+                - type: lic
+                  children:
+                    - text: Snowpark code translated and executed as SQL on Snowflake
+            - type: li
+              children:
+                - type: lic
+                  children:
+                    - text: Python functions deployed in a secure sandbox in Snowflake
+        - type: p
+          children:
+            - text: ""
+            - src: /api/v1/file/fbd9fc6e-450c-4e49-8405-3d8159f01016
+              type: image
+              width: 600
+              children:
+                - text: ""
+            - text: ""
+        - type: p
+          children:
+            - text: ""
+        - type: p
+          children:
+            - text: "Here's the value of using Snowpark:"
+        - type: p
+          children:
+            - text: ""
+            - src: /api/v1/file/ab013116-6922-4f79-a0b5-035c0239a53f
+              type: image
+              width: 600
+              children:
+                - text: ""
+            - text: ""
+  - cellType: TEXT
+    cellId: 69ed18ce-78c8-4d2e-afe1-b2d1196d6509 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      richText:
+        - type: h2
+          children:
+            - text: Explain the Query
+        - type: p
+          children:
+            - text: Let's look at what was executed in Snowflake to create our location_df DataFrame.
+        - type: p
+          children:
+            - text: The translated SQL query can be seen in the Snowsight interface under 
+            - text: Activity
+              italic: true
+            - text:  in the 
+            - text: Query History
+              italic: true
+            - text:  or directly in our notebook by using the explain() function. 
+            - bold: true
+              text: "Value:"
+            - text:  Transparent execution and compute usage.
+        - type: p
+          children:
+            - text: ""
+        - type: p
+          children:
+            - text: ""
+            - src: /api/v1/file/8863db67-8658-4d08-a6f3-70cbfaae638c
+              type: image
+              width: 600
+              children:
+                - text: ""
+            - text: ""
+  - cellType: CODE
+    cellId: 3a01b778-5a4d-4677-a090-fdf589e701ed # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: ExplainCode
+    config:
+      source: location_df.explain()
+  - cellType: TEXT
+    cellId: 73b55a0d-37de-406a-8eba-779f3529e2ff # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      richText:
+        - type: paragraph
+          children:
+            - text: ""
+            - src: /api/v1/file/339b20de-95a9-472c-ae71-331b8542d293
+              type: image
+              width: 600
+              children:
+                - text: ""
+            - text: ""
+  - cellType: TEXT
+    cellId: 8566fb77-e675-497c-ba89-51be6c869ad8 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      richText:
+        - type: h2
+          children:
+            - text: Compare DataFrame Size
+        - type: p
+          children:
+            - text: |
+                Let's bring a sample of our Snowflake dataset to our Python environment in a pandas DataFrame using the to_pandas() function. We will compare how much memory is used for the pandas DataFrame compared to the Snowpark DataFrame. As we will see, no memory is used for the Snowpark DataFrame in our Python environment. All data in the Snowpark DataFrame remains on Snowflake.
+            - bold: true
+              text: "Value:"
+            - text:  No copies or movement of data when working with Snowpark DataFrames.
+  - cellType: CODE
+    cellId: fea56832-0510-418c-bfa6-cb740e060771 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: DFvsSnowflakeDF
+    config:
+      source: |-
+        # Bring 10,000 rows from Snowflake to pandas
+        pandas_df = snowpark_df.limit(10000).to_pandas()
+
+        # Get Snowpark DataFrame size
+        snowpark_size = sys.getsizeof(snowpark_df) / (1024*1024)
+        print(f"Snowpark DataFrame Size (snowpark_df): {snowpark_size:.2f} MB")
+
+        # Get pandas DataFrame size
+        pandas_size = sys.getsizeof(pandas_df) / (1024*1024)
+        print(f"Pandas DataFrame Size (pandas_df): {pandas_size:.2f} MB")
+  - cellType: TEXT
+    cellId: 4804a6ca-3b8c-47b6-ae61-cffcbcfb0a1f # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      richText:
+        - type: h2
+          children:
+            - text: Data Exploration
+        - type: p
+          children:
+            - text: |
+                Here, we will use Snowpark to explore our data. A common pattern for exploration is to use Snowpark to manipulate our data and then bring an aggregate table to our Python environment for visualization.
+            - bold: true
+              text: "Value:"
+            - text: |-
+                 - Native Snowflake performance and scale for aggregating large datasets. - Easy transfer of aggregate data to the client-side environment for visualization.
+                As we explore our data, we will highlight what is being done in Snowflake and what we are transferring to our client-side environment (Python notebook environment) for visualization.
+  - cellType: TEXT
+    cellId: 640ef080-3efa-4e9d-acc2-fe35059ce316 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      richText:
+        - type: h2
+          children:
+            - text: How many rows are in our data?
+        - type: p
+          children:
+            - text: |
+                This will give us an idea of how we might need to approach working with this data. Do we have enough data to build a meaningful model? What compute might be required? Will we need to sample the data?
+            - bold: true
+              text: "What's happening where?:"
+            - text:  Rows counted in Snowflake. No data transfer.
+  - cellType: CODE
+    cellId: 9d6df2be-06d1-44c4-844b-ac1bffa384a7 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: Count
+    config:
+      source: |-
+        #Use the .count() function
+        snowpark_df.count()
+  - cellType: TEXT
+    cellId: 0108dd52-9652-4305-b796-353d48a3756a # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      richText:
+        - type: h2
+          children:
+            - text: Let's calculate some descriptive statistics.
+        - type: p
+          children:
+            - text: |
+                We use the Snowpark describe() function to calculate summary statistics and then bring the aggregate results into a pandas DataFrame to visualize in a formatted table.
+            - bold: true
+              text: "What's happening where?:"
+            - text:  Summary statistics calculated in Snowflake. Transfer aggregate summary statistics for client-side visualization.
+  - cellType: CODE
+    cellId: ace910f9-42c6-47ec-a2af-07e584e4c485 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: SnowflakeDF_to_Pandas
+    config:
+      source: |-
+        #Use the Snowpark DataFrame .describe function. You need to need to visualize from a pandas DataFrame
+        snowpark_df.describe().to_pandas()
+  - cellType: CODE
+    cellId: e97a6816-f8c1-4770-9bad-bfdbcacede26 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: DefineNumericColumns
+    config:
+      source: |-
+        # What are the numeric columns?
+        # Define Snowflake numeric types
+        numeric_types = [T.DecimalType, T.DoubleType, T.FloatType, T.IntegerType, T.LongType]
+
+        # Get numeric columns
+        numeric_columns = [col.name for col in snowpark_df.schema.fields if type(col.datatype) in numeric_types]
+        numeric_columns
+  - cellType: CODE
+    cellId: a05b1bd9-6128-4fc2-b6f5-781e67ce7931 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: DefineCategoricalColumns
+    config:
+      source: |-
+        # What are the categorical columns?
+        # Define Snowflake categorical types
+        categorical_types = [T.StringType]
+
+        # Get categorical columns
+        categorical_columns = [col.name for col in snowpark_df.schema.fields if type(col.datatype) in categorical_types]
+        categorical_columns
+  - cellType: CODE
+    cellId: 35535476-33d9-45a7-af18-c63bc3e98439 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      source: |-
+        # What are the average shift sales (USD) by city?
+        # Group by city and average shift sales
+        analysis_df = snowpark_df.group_by("city").agg(F.mean("shift_sales").alias("avg_shift_sales"))
+
+        # Sort by average shift sales
+        analysis_df = analysis_df.sort("avg_shift_sales", ascending=True)
+
+        # Pull to pandas and plot
+        analysis_df.to_pandas().plot.barh(x="CITY", y="AVG_SHIFT_SALES")
+  - cellType: TEXT
+    cellId: 6b6e54fc-7aa1-47f1-a40f-54cba6cfd376 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      richText:
+        - type: paragraph
+          children:
+            - text: ""
+            - src: /api/v1/file/b7837b19-4698-4d19-bf73-8c74e34eb0f5
+              type: image
+              width: 600
+              children:
+                - text: ""
+            - text: ""
+  - cellType: TEXT
+    cellId: 16c7bddb-d5cb-47d9-9c3d-925109133ccb # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      richText:
+        - type: h2
+          children:
+            - text: Feature Engineering
+        - type: p
+          children:
+            - text: |
+                Now let's keep revelant columns and transform columns to create features needed for our prediction model.To make some of our features more useful, we will normalize them using standard preprocessing techniques, such as One-Hot Encoding and MinMaxScaling. With SnowparkML, you can use a standard sklearn-style API to execute fully distributed feature engineering preprocessing tasks on Snowflake compute, with zero data movement. Let's fit a scaler and encoder to our data, then use it to transform the data, producing new feature columns.
+        - type: p
+          children:
+            - bold: true
+              text: "Value:"
+            - text: |
+                 The Snowpark syntax makes pipelines easy to implement and understand. The syntax also allows for easy migration of Spark pipelines to Snowflake.
+        - type: p
+          children:
+            - bold: true
+              text: All transformations for feature engineering in this notebook will be executed on Snowflake compute.
+        - type: p
+          children:
+            - text: |
+                Notice what we haven't had to do? No tuning, maintenance, or operational overhead. We just need a role, warehouse, and access to the data.
+            - bold: true
+              text: Value
+            - text: ": Near-zero maintenance. Focus on the work that brings value."
+  - cellType: TEXT
+    cellId: 7b3e9950-fe3a-4ebf-926c-8fe544b45ae5 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      richText:
+        - type: h2
+          children:
+            - text: Create a Rolling Average Feature
+        - type: p
+          children:
+            - text: We will use a Snowflake window function to get a 
+            - bold: true
+              text: rolling shift average by location
+            - text:  over time. Window functions allow us to aggregate on a "moving" group of rows.
+        - type: h4
+          children:
+            - bold: true
+              text: Step 1. Create a Window
+        - type: p
+          children:
+            - text: Our window will partition the data by location and shift. It will order rows by date. It will include all rows prior to the current date of the observation it is aggregating for.
+  - cellType: CODE
+    cellId: 0477c5d1-148c-402c-89cb-b2ea5cc25af0 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: CreateRollingWindows
+    config:
+      source: |-
+        window_by_location_all_days = (
+            Window.partition_by("location_id", "shift")
+            .order_by("date")
+            .rows_between(Window.UNBOUNDED_PRECEDING, Window.CURRENT_ROW - 1)
+        )
+  - cellType: TEXT
+    cellId: eb2dd1a8-bc1f-49d2-b6d9-767f3952dbcc # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      richText:
+        - type: h4
+          children:
+            - bold: true
+              text: Step 2. Aggregate across the Window
+  - cellType: CODE
+    cellId: 99c2f927-f989-4347-a20e-cd6dd304d98c # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: AggregateRollingWindows
+    config:
+      source: |-
+        snowpark_df = snowpark_df.with_column(
+            "avg_location_shift_sales", 
+            F.avg("shift_sales").over(window_by_location_all_days)
+        )
+  - cellType: TEXT
+    cellId: dd8f56cf-8235-4208-acf2-3f229f528673 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      richText:
+        - type: h2
+          children:
+            - text: Impute Missing Values
+        - type: p
+          children:
+            - text: The rolling average feature we just created is missing if there are no prior shift sales at that location. We will replace those missing values with 0.
+  - cellType: CODE
+    cellId: 3a0229d1-5c6f-412d-b7ca-e3d0a48518a7 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: ImputeMissingValues
+    config:
+      source: snowpark_df = snowpark_df.fillna(value=0, subset=["avg_location_shift_sales"])
+  - cellType: TEXT
+    cellId: ab0a7f9c-06a5-4292-90e9-6a8d1744fb81 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      richText:
+        - type: h2
+          children:
+            - text: Leverage Snowpark ML Modeling API to create features
+        - type: p
+          children:
+            - text: Snowpark ML provides APIs to support each stage of an end-to-end machine learning development and deployment process and includes two key components: 
+            - url: https://docs.snowflake.com/en/developer-guide/snowpark-ml/snowpark-ml-modeling
+              type: a
+              children:
+                - text: Snowpark ML Modeling
+            - text:  and 
+            - url: https://docs.snowflake.com/en/developer-guide/snowpark-ml/snowpark-ml-mlops-model-registry
+              type: a
+              children:
+                - text: Snowpark ML Ops
+            - text: .
+        - type: p
+          children:
+            - text: ""
+            - url: https://docs.snowflake.com/en/developer-guide/snowpark-ml/snowpark-ml-modeling
+              type: a
+              children:
+                - text: Snowpark ML Modeling
+            - text:  supports data preprocessing, feature engineering, and model training in Snowflake using popular machine learning frameworks, such as scikit-learn, xgboost, and lightgbm. This API also includes a preprocessing module that can use compute resources provided by a Snowpark-optimized warehouse to provide scalable data transformations.
+        - type: p
+          children:
+            - text: Snowpark ML Operations (MLOps), featuring the 
+            - url: https://docs.snowflake.com/en/developer-guide/snowpark-ml/snowpark-ml-mlops-model-registry
+              type: a
+              children:
+                - text: Snowpark ML Model Registry
+            - text: ", complements the Snowpark ML Development API. The model registry allows secure deployment and management of models in Snowflake, and supports models trained both inside and outside of Snowflake."
+        - type: p
+          children:
+            - text: ""
+        - type: p
+          children:
+            - text: "Here are a Snowpark Features commonly used for Data Engineering tasks:"
+        - type: p
+          children:
+            - text: ""
+            - src: /api/v1/file/ab2b54f5-6742-436a-b20d-2e3615d38aee
+              type: image
+              width: 600
+              children:
+                - text: ""
+            - text: ""
+        - type: p
+          children:
+            - text: ""
+        - type: p
+          children:
+            - text: "Here are Snowpark Features commonly used by Data Scientists for ML efforts:"
+        - type: p
+          children:
+            - text: ""
+            - src: /api/v1/file/b003e0e6-afbe-42ce-a49e-20e76ca232af
+              type: image
+              width: 600
+              children:
+                - text: ""
+            - text: ""
+  - cellType: CODE
+    cellId: 9dc28a0b-5a08-46f9-abcf-0746e022f05b # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: ScaleUpSnowflakeCompute
+    config:
+      source: session.sql("alter warehouse " + warehouse + " set warehouse_size = LARGE").collect()
+  - cellType: CODE
+    cellId: 137706ec-92ad-44c8-848f-0735bdd993d2 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: DefineDataTransformations
+    config:
+      source: |-
+        # Import Snowpark ML: Machine Learning Toolkit for Snowflake
+        import snowflake.ml.modeling.preprocessing as snowmlpp
+
+        # Define our scaler and ordinal encoding functions
+
+        # Snowpark ML scaler (MinMaxScaler) is used to shrink data within the given range, usually of 0 to 1. 
+        # It transforms data by scaling features to a given range. It scales the values to a specific value range without changing the shape of the original distribution.
+        # For the Tasty_Bytes data, use MinMaxScaler to normalize "CITY_POPULATION" into "CITY_POPULATION_NORM" with values between 0 and 1.
+
+        def fit_scaler(session, df):
+            mm_target_columns = ["CITY_POPULATION"]
+            mm_target_cols_out = ["CITY_POPULATION_NORM"]
+            snowml_mms = snowmlpp.MinMaxScaler(input_cols=mm_target_columns, output_cols=mm_target_cols_out)
+            snowml_mms.fit(df)
+            return snowml_mms
+
+        # Snowpark ML ordinal encoding (OE) is used to improve model performance by providing more information to the model about categorical variables. 
+        # It can help to avoid the problem of ordinality, which can occur when a categorical variable has a natural ordering (e.g. “small”, “medium”, “large”).
+        # For the Tasty_Bytes data, use OE to change "SHIFT" which is currently AM or PM into and integer representation of "SHIFT_OHE" is 1.0 or 0.0. 
+
+        def fit_oe(session, df):
+            oe_target_cols = ["SHIFT"]
+            oe_output_cols = ["SHIFT_OE"]
+            snowml_oe = snowmlpp.OrdinalEncoder(input_cols=oe_target_cols, output_cols=oe_output_cols)
+            snowml_oe.fit(df)
+            return snowml_oe
+  - cellType: CODE
+    cellId: 6de77476-e8a8-46bb-b7b4-2c91de7b03ce # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: RunDataTransformations
+    config:
+      source: |-
+        # Run Snowpark ML preprocessing functions against our feature data
+
+        # For the Tasty_Bytes data, use MinMaxScaler to normalize "CITY_POPULATION" into "CITY_POPULATION_NORM" with values between 0 and 1.
+        snowml_mms = fit_scaler(session, snowpark_df)
+        normed_df = snowml_mms.transform(snowpark_df)
+
+        # For the Tasty_Bytes data, use OneHotEncoder to change "SHIFT" which is currently AM or PM into and integer representation of "SHIFT_OHE_AM" is 1 or 0 and "SHIFT_OHE_PM" is 1 or 0. 
+        snowml_oe = fit_oe(session, normed_df)
+        oe_df = snowml_oe.transform(normed_df)
+        oe_df.show()
+  - cellType: TEXT
+    cellId: 7d7971de-9e08-4a85-8511-1fd65cbf91f6 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      richText:
+        - type: h2
+          children:
+            - text: Filter to Historical Data
+        - type: p
+          children:
+            - text: Our data includes placeholders for future data with missing shift sales. The future data represents the next 7 days of shifts for all locations. The historical data has shift sales for all locations where a food truck parked during a shift. We will only use historical data when training our model and will filter out the dates where the shift_sales column is missing.
+  - cellType: CODE
+    cellId: da6b4977-7ffc-432d-b4ea-1a6bae838a74 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: RemoveDatesInFuture
+    config:
+      source: |-
+        # Data Science best practice: Always perform data quality on your training set e.g. remove nulls or invalid cells as they are the biggest problem in a training set as they output high false positives
+
+        # Specifically for Tasty_Bytes data, dates where "shift_sales" are null values reflect future dates where sales need to be predicted.
+        # Filter out these future dates so these records will not be used in model training. 
+        historical_df = oe_df.filter(F.col("shift_sales").is_not_null())
+  - cellType: TEXT
+    cellId: ac54f9ee-d45f-431d-a115-b5508d34c8f2 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      richText:
+        - type: h2
+          children:
+            - text: Persist Transformations
+        - type: p
+          children:
+            - text: |
+                If we want to save the changes we can either save it as a table, meaning the SQL generated by the DataFrame is executed and the result is stored in a table or as a view where the DataFrame SQL will be the definition of the view.
+            - bold: true
+              text: save_as_table
+            - text:  saves the result in a table, if 
+            - bold: true
+              text: mode='overwrite'
+            - text:  then it will also replace the data that is in it.
+  - cellType: CODE
+    cellId: 757f80fe-92d1-403e-bdd7-7540b1527be0 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: SaveDF_to_Snowflake
+    config:
+      source: |-
+        # Let's select 
+        historical_df.write.save_as_table(table_name=schema + '.INPUT_DATA', mode='overwrite')
+        session.table('INPUT_DATA').show()
+  - cellType: TEXT
+    cellId: 110bf4b0-4fc7-4111-8900-469dc3258294 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      richText:
+        - type: h1
+          children:
+            - text: Part 2 - Use Snowflake Cortex ML-Based Function for Time-Series Forecasting
+        - type: paragraph
+          children:
+            - text: ""
+            - src: /api/v1/file/a8cb96db-7ab0-4b8c-85d2-bdf08449b372
+              type: image
+              width: 600
+              children:
+                - text: ""
+            - text: ""
+  - cellType: TEXT
+    cellId: 9132ae87-d904-46b5-99e4-c757fd550ad9 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      richText:
+        - type: h2
+          children:
+            - text: Snowflake Cortex ML Functions
+        - type: p
+          children:
+            - text: Time-Series Forecasting is part of Snowflake Cortex, Snowflake’s intelligent, fully-managed AI and ML service. This feature is part of the Snowflake Cortex ML-based function suite. Forecasting employs a machine learning algorithm to predict future data by using historical time series data.
+        - type: p
+          children:
+            - text: ""
+            - src: /api/v1/file/1b799108-2ebe-442c-bac7-c74f78dff613
+              type: image
+              width: 600
+              children:
+                - text: ""
+            - text: ""
+        - type: p
+          children:
+            - text: "Time series forecasting produces univariate predictions of future data based on historical input data. A common use case is to forecast sales based on seasonality and other factors.The historical data must include:"
+        - type: ul
+          children:
+            - type: li
+              children:
+                - type: lic
+                  children:
+                    - text: A timestamp column.
+            - type: li
+              children:
+                - type: lic
+                  children:
+                    - text: A target value column representing some quantity of interest at each timestamp.
+        - type: p
+          children:
+            - text: |-
+                
+                The historical data can also include additional columns that might have influenced the target value (
+            - url: https://en.wikipedia.org/wiki/Exogenous_and_endogenous_variables
+              type: a
+              children:
+                - text: exogenous variables
+            - text: ). These can be numbers or text. The nature (categorical or continuous) of each such column is automatically detected.
+        - type: p
+          children:
+            - text: This historical data is used to train a machine learning model that produces a forecast of the value column at future timestamps. The model is a schema-level object and can be used for multiple forecasts after it is trained.
+        - type: p
+          children:
+            - text: Forecasting works with either single-series or multi-series data. Multi-series data represents multiple independent threads of events. For example, if you have sales data for multiple stores, each store’s sales can be forecast separately by a single model based on the store identifier.
+        - type: p
+          children:
+            - text: ""
+            - src: /api/v1/file/0d96d247-1b06-43eb-b380-19feb4792168
+              type: image
+              width: 600
+              children:
+                - text: ""
+            - text: ""
+  - cellType: TEXT
+    cellId: 828044ed-5a95-4aed-92a2-d0fd42e89296 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      richText:
+        - type: p
+          children:
+            - text: To produce forecasts of time series data, use the Snowflake built-in class 
+            - url: https://docs.snowflake.com/en/sql-reference/classes/forecast
+              type: a
+              children:
+                - text: FORECAST
+            - text: ", and follow these steps:"
+        - type: ol
+          children:
+            - type: li
+              children:
+                - type: lic
+                  children:
+                    - text: ""
+                    - url: https://docs.snowflake.com/en/sql-reference/classes/forecast.html#label-class-forecast-create
+                      type: a
+                      children:
+                        - text: Create a forecast model object
+                    - text: ", passing in a reference to the training data.This object will fit (train) a model to the training data that you provide. The model is a schema-level object."
+            - type: li
+              children:
+                - type: lic
+                  children:
+                    - text: Using this forecast model object, call 
+                    - url: https://docs.snowflake.com/en/sql-reference/classes/forecast.html#label-class-forecast-create
+                      type: a
+                      children:
+                        - text: CREATE SNOWFLAKE.ML.FORECAST
+                    - text:  to produce a forecast, passing in information about the future period (that is, the number of time steps and values for any non-timestamp features).The method uses the model to produce a forecast.
+  - cellType: TEXT
+    cellId: 41eed886-f4bf-47a9-bb1e-6bfccd77858b # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      richText:
+        - type: h4
+          children:
+            - text: About the Forecasting Algorithm
+        - type: p
+          children:
+            - text: The forecasting algorithm is powered by a 
+            - url: https://en.wikipedia.org/wiki/Gradient_boosting
+              type: a
+              children:
+                - text: gradient boosting machine
+            - text:  (GBM). Like an 
+            - url: https://en.wikipedia.org/wiki/Autoregressive_integrated_moving_average
+              type: a
+              children:
+                - text: ARIMA
+            - text:  model, it uses a differencing transformation to model data with a non-stationary trend and uses auto-regressive lags of the historical target data as model features.
+        - type: p
+          children:
+            - text: Additionally, the algorithm uses rolling averages of historical target data to help predict trends and automatically produces cyclic calendar features (such as day of week and week of year) from timestamp data.
+        - type: p
+          children:
+            - text: You can fit models with only historical target and timestamp data, or you may include exogenous data (features) that might have influenced the target value. Exogenous variables can be numerical or categorical and may be NULL (rows containing NULLs for exogenous variables are not dropped).
+        - type: p
+          children:
+            - text: The algorithm does not rely on one-hot encoding when training on categorical features, so you can use categorical data with many dimensions (high cardinality).
+        - type: p
+          children:
+            - text: "For more details about Snowflake's ML-Powered Forecasting Algorithm and how to use, please see "
+            - url: https://docs.snowflake.com/en/user-guide/ml-powered-forecasting#about-the-forecasting-algorithm
+              type: a
+              children:
+                - text: https://docs.snowflake.com/en/user-guide/ml-powered-forecasting#about-the-forecasting-algorithm
+            - text: ""
+  - cellType: TEXT
+    cellId: b2290009-7270-4a3c-b30d-91378783144b # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      richText:
+        - type: p
+          children:
+            - text: "Here's a short video presenting "
+            - url: https://www.youtube.com/watch?v=8WgVTf3im7w
+              type: a
+              children:
+                - text: "Snowflake ML Powered Functions: Forecasting, Anomaly Detection, Contribution Explorer"
+            - text: ""
+        - type: paragraph
+          children:
+            - text: "Check out the code at: "
+            - url: https://www.youtube.com/redirect?event=video_description&redir_token=QUFFLUhqbUZVS1dBWGhmYlVJUEt4MUsyWlY1VzVNbHVTUXxBQ3Jtc0ttaURLdms3dE4xeHZuVHVtVmlOZmxOQWRiOXA4RjNweWJuRTBSSkJkMnhxVUJseFhNdnBZQkZVbEVnWGdBbnFsODZ6TlZkeV9wSmo1NzhtbUZnOTdfYWE2czRjSnBmRTNkYWZpRm5lckxTay1lTi1Edw&q=https%3A%2F%2Fgithub.com%2FSnowflake-Labs%2Fsf-samples%2Fblob%2Fmain%2Fsamples%2FML%2520Powered%2520Functions%2FJune%25202023%2520MLPF%2520Demos.sql&v=8WgVTf3im7w
+              type: a
+              children:
+                - text: https://github.com/Snowflake-Labs/sf-...
+            - text: ""
+        - type: paragraph
+          children:
+            - text: ""
+  - cellType: SQL
+    cellId: 6877ce55-539b-487e-89cd-fa68a35c99a5 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: SQL_ViewSFTable
+    config:
+      source: SELECT * FROM SALES_FORECAST_INPUT LIMIT 10;
+      dataFrameCell: false
+      dataConnectionId: null
+      resultVariableName: dataframe_6
+      useRichDisplay: false
+      sqlCellOutputType: PANDAS
+      useQueryMode: false
+      castDecimals: true
+      useNativeDates: true
+      outputFilteredResult: true
+      allowDuplicateColumns: false
+      tableDisplayConfig: null
+  - cellType: SQL
+    cellId: 5b0ea4e0-40d0-44ab-a127-f209919e4275 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: SQL_CreateSFView
+    config:
+      source: |-
+        -- Create view for lobster sales
+        CREATE OR REPLACE VIEW lobster_sales AS (
+            SELECT
+                timestamp,
+                total_sold
+            FROM
+                SALES_FORECAST_INPUT
+            WHERE
+                menu_item_name LIKE 'Lobster Mac & Cheese'
+        );
+      dataFrameCell: false
+      dataConnectionId: null
+      resultVariableName: dataframe
+      useRichDisplay: false
+      sqlCellOutputType: PANDAS
+      useQueryMode: false
+      castDecimals: true
+      useNativeDates: true
+      outputFilteredResult: true
+      allowDuplicateColumns: false
+      tableDisplayConfig: null
+  - cellType: SQL
+    cellId: b814fa9f-ab45-4694-a780-b96e62a7e5e0 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: SQL_CreateCortexMLForecast
+    config:
+      source: |-
+        CREATE OR REPLACE snowflake.ml.forecast lobstermac_forecast (
+            INPUT_DATA => SYSTEM$REFERENCE('VIEW', 'lobster_sales'),
+            TIMESTAMP_COLNAME => 'TIMESTAMP',
+            TARGET_COLNAME => 'TOTAL_SOLD'
+        );
+      dataFrameCell: false
+      dataConnectionId: null
+      resultVariableName: dataframe_7
+      useRichDisplay: false
+      sqlCellOutputType: PANDAS
+      useQueryMode: false
+      castDecimals: true
+      useNativeDates: true
+      outputFilteredResult: true
+      allowDuplicateColumns: false
+      tableDisplayConfig: null
+  - cellType: SQL
+    cellId: e4d0c9f7-30a7-47ad-8b5e-ff51fc5fa6cd # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: SQL_ShowCortexMLForecast
+    config:
+      source: |-
+        -- Show models to confirm training has completed: 
+        SHOW snowflake.ml.forecast;
+      dataFrameCell: false
+      dataConnectionId: null
+      resultVariableName: dataframe_8
+      useRichDisplay: false
+      sqlCellOutputType: PANDAS
+      useQueryMode: false
+      castDecimals: true
+      useNativeDates: true
+      outputFilteredResult: true
+      allowDuplicateColumns: false
+      tableDisplayConfig: null
+  - cellType: TEXT
+    cellId: 864a168e-cfd5-46af-9770-aa9a5612a032 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      richText:
+        - type: h1
+          children:
+            - text: Part 3 - Use Snowpark to train a model
+        - type: paragraph
+          children:
+            - text: ""
+            - src: /api/v1/file/8f1d01ea-6f74-4498-9f6d-65a0775486f3
+              type: image
+              width: 600
+              children:
+                - text: ""
+            - text: ""
+  - cellType: TEXT
+    cellId: 0bd565df-b93c-4d2b-b97f-296609045178 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      richText:
+        - type: paragraph
+          children:
+            - text: ""
+            - src: /api/v1/file/e8d28243-0095-4075-bbae-5ea0c52e0195
+              type: image
+              width: 600
+              children:
+                - text: ""
+            - text: ""
+  - cellType: TEXT
+    cellId: 6c4c35bf-51d6-48b2-b51f-4f2616ae6e24 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      richText:
+        - type: h2
+          children:
+            - text: Drop Columns
+        - type: p
+          children:
+            - text: Let's return to the original prepared table, with all cities listed, and drop columns that will not be used in the model.
+  - cellType: CODE
+    cellId: fba56721-7c35-4dc6-b0c4-6f2b64582f05 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: DropUnnecessaryColumns
+    config:
+      source: |-
+        prepared_df = historical_df.drop("location_id", "city_population", "shift", "city", "date")
+        prepared_df.show()
+  - cellType: TEXT
+    cellId: 3c3c7220-6c29-4626-a57e-0b0751f74358 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      richText:
+        - type: h2
+          children:
+            - text: Build a simple XGBoost Regression Model on Snowflake
+        - type: p
+          children:
+            - text: "We will now use our training data to train a linear regression model on Snowflake.Recall from above, the two main ways that Snowpark works:"
+        - type: ol
+          children:
+            - type: li
+              children:
+                - type: lic
+                  children:
+                    - text: Snowpark code translated and executed as SQL on Snowflake
+            - type: li
+              children:
+                - type: lic
+                  children:
+                    - text: Python functions deployed in a secure sandbox in Snowflake
+        - type: p
+          children:
+            - text: We will be leveraging the deployment of Python functions into Snowflake for training and model deployment.
+  - cellType: CODE
+    cellId: b4e8fdcf-43fe-44c0-8726-00d4f2f01954 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: ListAvailableColumns
+    config:
+      source: |-
+        # Retrieve column names needed in the next code block to populate feature_column_names
+        prepared_df.columns
+  - cellType: CODE
+    cellId: 9c9bb81e-49e4-423b-91e0-34c57a5fef9b # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: DefinePredictionModel
+    config:
+      source: |-
+        # Let's define relevant features needed for the prediction model.
+        LABEL_COLUMNS = ["SHIFT_SALES"]
+        OUTPUT_COLUMNS = ["PRED_SHIFT_SALES"]
+        FEATURE_COLUMN_NAMES = ["SHIFT_OE", "CITY_POPULATION_NORM", "MONTH", "DAY_OF_WEEK","LATITUDE","LONGITUDE","AVG_LOCATION_SHIFT_SALES"]
+
+        input_df = prepared_df.select(*LABEL_COLUMNS, *FEATURE_COLUMN_NAMES)
+        input_df.show()
+  - cellType: TEXT
+    cellId: ec19d463-cc09-46a9-baf2-fb1e4eeff3fa # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      richText:
+        - type: paragraph
+          children:
+            - text: SnowparkML also includes metric calculations such as correlations, and more. We will use the SnowparkML correlation method on our input dataframe to identify any linearly correlated features to the output. We'll also use matplotlib to plot the resulting matrix. Notice that all of the correlation calculations are pushed down to Snowflake!
+  - cellType: CODE
+    cellId: de350f0d-dd01-4e41-b3a8-e4d63b2da9e5 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: RunCorrelationAnalysis
+    config:
+      source: |-
+        import matplotlib.pyplot as plt
+        import seaborn as sns
+        from snowflake.ml.modeling.metrics.correlation import correlation
+        corr_df = correlation(df=input_df)
+  - cellType: CODE
+    cellId: 5eb87b02-597e-4550-91e9-3dd8cfa19d23 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: VisualizeCorrectionAnalysis
+    config:
+      source: |-
+        # Return only the correlation summary results to generate this heatmap
+        sns.heatmap(corr_df, cmap="YlGnBu", annot=True)
+  - cellType: TEXT
+    cellId: 1c3502ed-bb61-49f1-853e-ef7702aed997 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      richText:
+        - type: paragraph
+          children:
+            - text: What's great about this, is that we are using a lot of Snowpark components under the hood- the dataframe API, SQL, Python stored procedures and more. But with the new SnowparkML API, data scientists can take advantage of all that Snowpark affords them, while using common, familiar APIs that match how they do their work today.
+        - type: paragraph
+          children:
+            - text: Now that we have our feature data, let's actually fit an XGBoost model to our features to attempt to predict future sales. We'll fit several different models with different hyperparameters, and then show how we can use the Snowpark Model Registry to select our best-fit model.
+  - cellType: CODE
+    cellId: 1228aec5-d1c7-4e4e-bbcf-b8eb2b9129bb # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: SplitData_ModelTraining
+    config:
+      source: |-
+        # Split the data into train and test sets
+        train_df, test_df = input_df.random_split(weights=[0.9, 0.1], seed=98)
+  - cellType: TEXT
+    cellId: 1b6e3f63-9c10-4783-ab00-01d765e0b58d # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      richText:
+        - type: h2
+          children:
+            - text: What's happening when you leverage Snowpark ML Modeling API?
+        - type: p
+          children:
+            - text: Let's run our training job using the SnowparkML Modeling API- this will push down our model training to run on Snowflake, and you'll notice that the type of the model object returend is a SnowparkML XGBClassifier- this has some benefits, but also is fully compatible with the standard sklearn/xgboost model objects.
+        - type: ul
+          children:
+            - type: li
+              children:
+                - type: lic
+                  children:
+                    - text: The model.fit() function actually creates a temporary stored procedure in the background. This also means that the model training is a single-node operation. Be sure to use a Snowpark Optimized Warehouse if you need more memory. We are just using an XS Standard Virtual Warehouse here, which we created at the beginning of this quickstart.
+            - type: li
+              children:
+                - type: lic
+                  children:
+                    - text: The model.predict() function actually creates a temporary vectorized UDF in the background, which means the input DataFrame is batched as Pandas DataFrames and inference is parallelized across the batches of data. You can check the query history once you execute the following cell to check.
+        - type: p
+          children:
+            - text: ""
+            - src: /api/v1/file/ab6942cd-e67b-4444-8572-4b991f080704
+              type: image
+              width: 600
+              children:
+                - text: ""
+            - text: ""
+  - cellType: CODE
+    cellId: dce35da1-97cf-48f0-9c1b-1daa4ebe49d5 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: CreateXGBoostRegressorModel
+    config:
+      source: |-
+        from snowflake.ml.modeling.xgboost import XGBRegressor
+        # Define the XGBRegressor
+        regressor = XGBRegressor(
+            label_cols = LABEL_COLUMNS,
+            input_cols = FEATURE_COLUMN_NAMES,
+            output_cols = OUTPUT_COLUMNS
+        )
+
+        # Train
+        regressor.fit(train_df)
+
+        # Predict
+        result = regressor.predict(test_df)
+  - cellType: CODE
+    cellId: cbd2565b-2201-4fe3-a77c-5393bb864aee # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: RunModelOnRemainingData
+    config:
+      source: |-
+        # Just to illustrate, we can also pass in a Pandas DataFrame to Snowpark ML's model.predict()
+        regressor.predict(test_df.to_pandas())
+        # try 
+        regressor.predict(test_df)
+  - cellType: TEXT
+    cellId: c567e75e-4b4b-4004-8d68-e43b2094f8ee # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      richText:
+        - type: paragraph
+          children:
+            - text: Let's analyze the results using Snowpark ML's MAPE.
+  - cellType: CODE
+    cellId: cfd8827b-96cc-4a5e-a5ed-ed80790be483 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: CalculateModelError
+    config:
+      source: |-
+        # Use Snowpark ML metrics to calculate
+        from snowflake.ml.modeling.metrics import mean_absolute_percentage_error, mean_squared_error
+
+        # Predict
+        results = regressor.predict(test_df)
+
+        # Calculate MAPE
+        mape = mean_absolute_percentage_error(df=results, y_true_col_names=LABEL_COLUMNS, y_pred_col_names=OUTPUT_COLUMNS)
+
+        # Calculate MSE
+        mse = mean_squared_error(df=results, y_true_col_names=LABEL_COLUMNS, y_pred_col_names=OUTPUT_COLUMNS)
+
+        results.select([*LABEL_COLUMNS, *OUTPUT_COLUMNS]).show()
+        print(f'''Mean absolute percentage error: {mape}''')
+        print(f'''Mean squared error: {mse}''')
+  - cellType: CODE
+    cellId: f483147f-f4d6-4329-9ced-49d67b0279f9 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: VisualizeModelError
+    config:
+      source: |-
+        # Plot actual vs predicted 
+        g = sns.relplot(data=results["SHIFT_SALES", "PRED_SHIFT_SALES"].to_pandas().astype("float64"), x="SHIFT_SALES", y="PRED_SHIFT_SALES", kind="scatter")
+        g.ax.axline((0,0), slope=1, color="r")
+
+        plt.show()
+  - cellType: TEXT
+    cellId: 962db10c-6f13-4025-80c0-2e1265be39f2 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      richText:
+        - type: h2
+          children:
+            - bold: true
+              text: Scale down your assigned Snowflake compute warehouse.
+  - cellType: CODE
+    cellId: f9249225-ebc6-44f7-994e-8a5ca6bd914d # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: ScaleDownSnowflakeCompute
+    config:
+      source: |-
+        # Decrease size of Snowflake compute warehouse to XSMALL
+        session.sql("alter warehouse " + warehouse + " set warehouse_size = XSMALL").collect()
+  - cellType: TEXT
+    cellId: 316bddec-f6ad-4309-a0ae-8ae67eeac196 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      richText:
+        - type: h1
+          children:
+            - text: Part 4 - Use Snowpark for MLOps
+        - type: p
+          children:
+            - text: ""
+            - src: /api/v1/file/c8ed913e-fc00-4095-ba35-76a0ad95e47c
+              type: image
+              width: 600
+              children:
+                - text: ""
+            - text: ""
+  - cellType: TEXT
+    cellId: b32ef927-602b-4886-94a4-268da1294aa1 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      richText:
+        - type: paragraph
+          children:
+            - text: ""
+            - src: /api/v1/file/970fd760-0b61-412d-a6e4-5615b8d058e5
+              type: image
+              width: 600
+              children:
+                - text: ""
+            - text: ""
+  - cellType: TEXT
+    cellId: 9cd3e41b-73a7-4daa-9ad0-cf6163dcda60 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      richText:
+        - type: h2
+          children:
+            - text: Now let's use Snowflake's ML Model Registry
+        - type: p
+          children:
+            - text: Model Registry was created to support model management operations including model registration, versioning, metadata and audit trails. Integrated deployment infrastructure for batch inference is a critical ease-of-use feature. Users can deploy ML models for batch inference from the registry directly into a Snowflake Warehouse as a vectorized UDF, or as a service to a customer-specified Compute Pool in Snowpark Container Services.
+        - type: p
+          children:
+            - text: Snowflake's Model Registry supports SciKitLearn, XGBoost, Pytorch, Tensorflow and MLFlow (via the pyfunc interface) models.
+        - type: p
+          children:
+            - text: ""
+            - src: /api/v1/file/73ea05f3-ca2d-4ad6-97e7-680e1a1afe04
+              type: image
+              width: 600
+              children:
+                - text: ""
+            - text: ""
+        - type: p
+          children:
+            - text: Model Registry allows easy deployment of pre-trained open-source models from providers such as HuggingFace. See this blog for more details: 
+            - url: https://medium.com/snowflake/whats-in-a-name-model-naming-versioning-in-snowpark-model-registry-b5f7105fd6f6
+              type: a
+              children:
+                - text: https://medium.com/snowflake/whats-in-a-name-model-naming-versioning-in-snowpark-model-registry-b5f7105fd6f6
+            - text:  or the Model Registry documentation: 
+            - url: https://docs.snowflake.com/en/developer-guide/snowpark-ml/snowpark-ml-mlops-model-registry
+              type: a
+              children:
+                - text: https://docs.snowflake.com/en/developer-guide/snowpark-ml/snowpark-ml-mlops-model-registry
+            - text: ""
+  - cellType: TEXT
+    cellId: 09844e0d-db11-4146-913b-29fea5d56590 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      richText:
+        - type: h2
+          children:
+            - text: Create the Model Registry and register your model
+  - cellType: CODE
+    cellId: e395601c-1887-49a4-b6ab-4e229d626728 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: CreateModelRegistry
+    config:
+      source: |-
+        from snowflake.ml.registry import Registry
+
+        native_registry = Registry(session, database_name="HOL", schema_name=schema)
+  - cellType: CODE
+    cellId: 16f3fe65-411f-4e44-ba21-6cc56ebf6459 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: LogOriginalXGBoostRegressorModel_ModelRegistry
+    config:
+      source: |-
+        # Get sample input data to pass into the registry logging function
+        X = train_df.select(FEATURE_COLUMN_NAMES).limit(100)
+
+        # Define model name
+        model_name = "SHIFT_SALES_PREDICTION"
+
+        # Let's first log the very first model we trained
+        model_ver = native_registry.log_model(
+            model_name=model_name,
+            version_name='V0',
+            model=regressor,
+            sample_input_data=X, # to provide the feature schema
+        )
+  - cellType: CODE
+    cellId: 25667b1d-3113-480a-ae7b-62b2d3f17482 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: ShowModels_ModelRegistry
+    config:
+      source: |-
+        # Let's confirm model(s) that were added
+        native_registry.get_model(model_name).show_versions()
+  - cellType: CODE
+    cellId: dabb9ea4-b7e7-4c9b-80ef-a5511beb90b6 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: ShowDefaultModel
+    config:
+      source: |-
+        # We can see what the default model is when we have multiple versions with the same model name:
+        native_registry.get_model(model_name).default.version_name
+  - cellType: CODE
+    cellId: 0e59d523-3ab3-4163-b6ca-fcca05bc8f5b # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: DefineDefaultModel
+    config:
+      source: |-
+        # Now we can use the default version model to perform inference.
+        model_ver = native_registry.get_model(model_name).version('V0')
+        result_sdf = model_ver.run(test_df, function_name="predict")
+        result_sdf.show()
+  - cellType: TEXT
+    cellId: c7b93d79-224b-4abb-b86b-0dd586eb8810 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      richText:
+        - type: paragraph
+          children:
+            - text: Now that our model is built and deployed, let's see it in action! We will find the best place to park in Vancouver for tomorrow morning's shift.
+  - cellType: CODE
+    cellId: ea305671-78eb-49b3-80de-f302722e0753 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: GetVancouverShiftSales
+    config:
+      source: |-
+        date_tomorrow_df = oe_df.filter(
+            (F.col("shift_sales").isNull())
+            & (F.col("shift_oe") == 1)
+            & (F.col("city") == "Vancouver")
+        )
+        date_tomorrow_df.show()
+  - cellType: CODE
+    cellId: 3cb47fe0-6ad2-4a45-8a00-4725136e760b # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: PredictVancouverShiftSales
+    config:
+      source: |-
+        result_sdf = regressor.predict(date_tomorrow_df)
+        result_sdf.show()
+  - cellType: TEXT
+    cellId: bcfa23c7-62cb-46fc-9e2a-d25f5885a576 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      richText:
+        - type: paragraph
+          children:
+            - text: ""
+            - src: /api/v1/file/6e143358-35ba-41ca-8b03-7cf7604f3e6a
+              type: image
+              width: 600
+              children:
+                - text: ""
+            - text: ""
+  - cellType: TEXT
+    cellId: e5e28b34-afe0-40e8-8dac-4b488409d422 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      richText:
+        - type: h2
+          children:
+            - text: Visualize on a Map
+        - type: p
+          children:
+            - text: "The red and yellow areas indicate higher predicted sales locations and the green zones indicate lower predicted sales. We will use this insight to ensure that our drivers are parking at the high-value locations. Value: Updated predictions readily available to drive towards our corporate goals."
+  - cellType: MAP
+    cellId: 582a20df-26a6-4038-85cc-3eb895259360 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      height: 520
+      map:
+        theme: hex
+        layers:
+          - id: 62c8d4b9-386c-4191-9933-e2c05efae456
+            data:
+              coordinates:
+                system: latlng_separate
+                dataFrameLatColumn: LATITUDE
+                dataFrameLngColumn: LONGITUDE
+              dataFrameName: result_sdf
+            fill:
+              type: dynamic
+              colors:
+                - - 41
+                  - 160
+                  - 124
+                - - 255
+                  - 255
+                  - 255
+              dataFrameColumn: PRED_SHIFT_SALES
+            type: scatter
+            radius:
+              type: static
+              value: 20
+            opacity: 0.6
+            visible: true
+            tooltipDataFrameColumns: []
+  - cellType: TEXT
+    cellId: 20fb3d53-b0df-42bf-b7ef-00ecaaf6224d # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      richText:
+        - type: h1
+          children:
+            - text: Part 5 - Create a SiS application to use predicted outputs
+        - type: p
+          children:
+            - text: ""
+            - src: /api/v1/file/b1f0034a-1c64-485b-b13f-14af0b2e634a
+              type: image
+              width: 600
+              children:
+                - text: ""
+            - text: ""
+        - type: p
+          children:
+            - text: "Create a SiS application for local managers to identify where to place daily food trucks. "
+  - cellType: TEXT
+    cellId: a6666cbe-d3ce-4cea-b4d3-b10d90d11831 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      richText:
+        - type: h3
+          children:
+            - text: "Create new SiS app. "
+        - type: h3
+          children:
+            - text: Replace existing code with SiS_application.py code listed below.
+        - type: h3
+          children:
+            - text: "Update database in lines 41, 66, and 124. "
+        - type: h3
+          children:
+            - text: "Include required pydeck and snowflake-ml-python package. "
+        - type: h3
+          children:
+            - text: Run the SiS application.
+  - cellType: TEXT
+    cellId: 8c1d454c-4384-4ebc-84f0-2483f54e248b # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      richText:
+        - type: paragraph
+          children:
+            - text: ""
+            - src: /api/v1/file/45be221c-0961-4a5b-9ac2-eb74af4fe1b6
+              type: image
+              width: 600
+              children:
+                - text: ""
+            - text: ""
+  - cellType: TEXT
+    cellId: f423a573-2d85-4f4f-8901-f2ccbd019207 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      richText:
+        - type: paragraph
+          children:
+            - text: "# Import Python packages"
+        - type: paragraph
+          children:
+            - text: import streamlit as st
+        - type: paragraph
+          children:
+            - text: import pydeck as pdk
+        - type: paragraph
+          children:
+            - text: import numpy as np
+        - type: paragraph
+          children:
+            - text: ""
+        - type: paragraph
+          children:
+            - text: ""
+        - type: paragraph
+          children:
+            - text: "# Import Snowflake modules"
+        - type: paragraph
+          children:
+            - text: from snowflake.snowpark import Session
+        - type: paragraph
+          children:
+            - text: import snowflake.snowpark.functions as F
+        - type: paragraph
+          children:
+            - text: from snowflake.snowpark import Window
+        - type: paragraph
+          children:
+            - text: from snowflake.snowpark.context import get_active_session
+        - type: paragraph
+          children:
+            - text: from snowflake.ml.registry import Registry
+        - type: paragraph
+          children:
+            - text: import snowflake.ml.modeling.preprocessing as snowmlpp
+        - type: paragraph
+          children:
+            - text: ""
+        - type: paragraph
+          children:
+            - text: ""
+        - type: paragraph
+          children:
+            - text: "# Set Streamlit page config"
+        - type: paragraph
+          children:
+            - text: st.set_page_config(
+        - type: paragraph
+          children:
+            - text: '    page_title="Streamlit App: Snowpark 101", '
+        - type: paragraph
+          children:
+            - text: '    page_icon=":truck:",'
+        - type: paragraph
+          children:
+            - text: '    layout="wide",'
+        - type: paragraph
+          children:
+            - text: )
+        - type: paragraph
+          children:
+            - text: ""
+        - type: paragraph
+          children:
+            - text: ""
+        - type: paragraph
+          children:
+            - text: "# Add header and a subheader"
+        - type: paragraph
+          children:
+            - text: st.header("Predicted Shift Sales by Location")
+        - type: paragraph
+          children:
+            - text: st.subheader("Data-driven recommendations for food truck drivers.")
+        - type: paragraph
+          children:
+            - text: " "
+        - type: paragraph
+          children:
+            - text: ""
+        - type: paragraph
+          children:
+            - text: ""
+        - type: paragraph
+          children:
+            - text: "# Connect to Snowflake"
+        - type: paragraph
+          children:
+            - text: "# session = init_connection()"
+        - type: paragraph
+          children:
+            - text: session = get_active_session()
+        - type: paragraph
+          children:
+            - text: " "
+        - type: paragraph
+          children:
+            - text: "# Create input widgets for cities and shift"
+        - type: paragraph
+          children:
+            - text: "with st.container():"
+        - type: paragraph
+          children:
+            - text: "    col1, col2 = st.columns(2)"
+        - type: paragraph
+          children:
+            - text: "    with col1:"
+        - type: paragraph
+          children:
+            - text: "        # Drop down to select city"
+        - type: paragraph
+          children:
+            - text: "        city = st.selectbox("
+        - type: paragraph
+          children:
+            - text: '            "City:",'
+        - type: paragraph
+          children:
+            - text: '            session.table("HOL.SCHEMA0.SHIFT_SALES_V")'
+        - type: paragraph
+          children:
+            - text: '            .select("city")'
+        - type: paragraph
+          children:
+            - text: "            .distinct()"
+        - type: paragraph
+          children:
+            - text: '            .sort("city"),'
+        - type: paragraph
+          children:
+            - text: "        )"
+        - type: paragraph
+          children:
+            - text: " "
+        - type: paragraph
+          children:
+            - text: "    with col2:"
+        - type: paragraph
+          children:
+            - text: "        # Select AM/PM Shift"
+        - type: paragraph
+          children:
+            - text: '        shift = st.radio("Shift:", ("AM", "PM"), horizontal=True)'
+        - type: paragraph
+          children:
+            - text: ""
+        - type: paragraph
+          children:
+            - text: ""
+        - type: paragraph
+          children:
+            - text: "    n_trucks = st.selectbox('How many food trucks would you like to schedule today?', np.arange(1,10))"
+        - type: paragraph
+          children:
+            - text: ""
+        - type: paragraph
+          children:
+            - text: ""
+        - type: paragraph
+          children:
+            - text: "    if n_trucks > 1:"
+        - type: paragraph
+          children:
+            - text: "        range = st.slider('What is the minimum distance in kilometers between food trucks?', 0, 20, 1)"
+        - type: paragraph
+          children:
+            - text: "        st.write('You are requesting a minimum distance of ', range, 'km')"
+        - type: paragraph
+          children:
+            - text: "        st.write('Click **:blue[Update]** to get the ', n_trucks, ' highest predicted Shift_Sales food truck locations.')"
+        - type: paragraph
+          children:
+            - text: "    else:"
+        - type: paragraph
+          children:
+            - text: "        st.write('Click **:blue[Update]** to get one food truck location predicted to have the Shift_Sales')"
+        - type: paragraph
+          children:
+            - text: "        "
+        - type: paragraph
+          children:
+            - text: "# Get predictions for city and shift time"
+        - type: paragraph
+          children:
+            - text: "def get_predictions(city, shift):"
+        - type: paragraph
+          children:
+            - text: "    # Get data and filter by city and shift"
+        - type: paragraph
+          children:
+            - text: "    snowpark_df = session.table("
+        - type: paragraph
+          children:
+            - text: '        "HOL.SCHEMA0.SHIFT_SALES_V"'
+        - type: paragraph
+          children:
+            - text: '    ).filter((F.col("shift") == shift) & (F.col("city") == city))'
+        - type: paragraph
+          children:
+            - text: " "
+        - type: paragraph
+          children:
+            - text: "    # Get rolling average"
+        - type: paragraph
+          children:
+            - text: "    window_by_location_all_days = ("
+        - type: paragraph
+          children:
+            - text: '        Window.partition_by("location_id")'
+        - type: paragraph
+          children:
+            - text: '        .order_by("date")'
+        - type: paragraph
+          children:
+            - text: "        .rows_between(Window.UNBOUNDED_PRECEDING, Window.CURRENT_ROW - 1)"
+        - type: paragraph
+          children:
+            - text: "    )"
+        - type: paragraph
+          children:
+            - text: " "
+        - type: paragraph
+          children:
+            - text: "    snowpark_df = snowpark_df.with_column("
+        - type: paragraph
+          children:
+            - text: '        "avg_location_shift_sales",'
+        - type: paragraph
+          children:
+            - text: '        F.avg("shift_sales").over(window_by_location_all_days),'
+        - type: paragraph
+          children:
+            - text: "    ).cache_result()"
+        - type: paragraph
+          children:
+            - text: " "
+        - type: paragraph
+          children:
+            - text: "    # Get tomorrow's date"
+        - type: paragraph
+          children:
+            - text: "    date_tomorrow = ("
+        - type: paragraph
+          children:
+            - text: '        snowpark_df.filter(F.col("shift_sales").is_null())'
+        - type: paragraph
+          children:
+            - text: '        .select(F.min("date"))'
+        - type: paragraph
+          children:
+            - text: "        .collect()[0][0]"
+        - type: paragraph
+          children:
+            - text: "    )"
+        - type: paragraph
+          children:
+            - text: " "
+        - type: paragraph
+          children:
+            - text: "    # Filter to tomorrow's date"
+        - type: paragraph
+          children:
+            - text: '    snowpark_df = snowpark_df.filter(F.col("date") == date_tomorrow)'
+        - type: paragraph
+          children:
+            - text: " "
+        - type: paragraph
+          children:
+            - text: "    # Impute"
+        - type: paragraph
+          children:
+            - text: '    snowpark_df = snowpark_df.fillna(value=0, subset=["avg_location_shift_sales"])'
+        - type: paragraph
+          children:
+            - text: ""
+        - type: paragraph
+          children:
+            - text: ""
+        - type: paragraph
+          children:
+            - text: "    for colname in snowpark_df.columns:"
+        - type: paragraph
+          children:
+            - text: "        new_colname = str.upper(colname)"
+        - type: paragraph
+          children:
+            - text: "        snowpark_df = snowpark_df.with_column_renamed(colname, new_colname)"
+        - type: paragraph
+          children:
+            - text: " "
+        - type: paragraph
+          children:
+            - text: "    # Encode"
+        - type: paragraph
+          children:
+            - text: '    snowpark_df = snowpark_df.with_column("shift_oe", F.iff(F.col("shift") == "AM", 0, 1))\'
+        - type: paragraph
+          children:
+            - text: '                             .with_column("shift_oe", F.iff(F.col("shift") == "PM", 1, 0))'
+        - type: paragraph
+          children:
+            - text: ""
+        - type: paragraph
+          children:
+            - text: "    # Scale"
+        - type: paragraph
+          children:
+            - text: '    mm_target_columns = ["CITY_POPULATION"]'
+        - type: paragraph
+          children:
+            - text: '    mm_target_cols_out = ["CITY_POPULATION_NORM"]'
+        - type: paragraph
+          children:
+            - text: "    snowml_mms = snowmlpp.MinMaxScaler(input_cols=mm_target_columns, "
+        - type: paragraph
+          children:
+            - text: "                                       output_cols=mm_target_cols_out)"
+        - type: paragraph
+          children:
+            - text: "    snowml_mms.fit(snowpark_df)"
+        - type: paragraph
+          children:
+            - text: "    snowpark_df = snowml_mms.transform(snowpark_df)"
+        - type: paragraph
+          children:
+            - text: "    "
+        - type: paragraph
+          children:
+            - text: "    # Get all features"
+        - type: paragraph
+          children:
+            - text: '    feature_cols = ["SHIFT_OE", '
+        - type: paragraph
+          children:
+            - text: '                    "CITY_POPULATION_NORM", '
+        - type: paragraph
+          children:
+            - text: '                    "MONTH", '
+        - type: paragraph
+          children:
+            - text: '                    "DAY_OF_WEEK",'
+        - type: paragraph
+          children:
+            - text: '                    "LATITUDE",'
+        - type: paragraph
+          children:
+            - text: '                    "LONGITUDE",'
+        - type: paragraph
+          children:
+            - text: '                    "AVG_LOCATION_SHIFT_SALES",'
+        - type: paragraph
+          children:
+            - text: '                    "LOCATION_ID"]'
+        - type: paragraph
+          children:
+            - text: ""
+        - type: paragraph
+          children:
+            - text: ""
+        - type: paragraph
+          children:
+            - text: "    snowpark_df = snowpark_df.select(feature_cols)"
+        - type: paragraph
+          children:
+            - text: ""
+        - type: paragraph
+          children:
+            - text: '    native_registry = Registry(session=session, database_name="HOL", schema_name="SCHEMA0")'
+        - type: paragraph
+          children:
+            - text: "    model_ver = native_registry.get_model(\"SHIFT_SALES_PREDICTION\").version('v0')"
+        - type: paragraph
+          children:
+            - text: '    result_sdf = model_ver.run(snowpark_df, function_name="predict")'
+        - type: paragraph
+          children:
+            - text: "    return result_sdf"
+        - type: paragraph
+          children:
+            - text: ""
+        - type: paragraph
+          children:
+            - text: '# Update predictions and plot when the "Update" button is clicked'
+        - type: paragraph
+          children:
+            - text: 'if st.button(":blue[Update]"):'
+        - type: paragraph
+          children:
+            - text: "    # Get predictions"
+        - type: paragraph
+          children:
+            - text: '    with st.spinner("Getting predictions..."):'
+        - type: paragraph
+          children:
+            - text: "        predictions_sdf = get_predictions(city, shift)"
+        - type: paragraph
+          children:
+            - text: "        predictions = predictions_sdf.to_pandas()"
+        - type: paragraph
+          children:
+            - text: " "
+        - type: paragraph
+          children:
+            - text: "    # Plot on a map"
+        - type: paragraph
+          children:
+            - text: '    st.subheader("Predicted Shift Sales for position")'
+        - type: paragraph
+          children:
+            - text: '    predictions["PRED_SHIFT_SALES"].clip(0, inplace=True)'
+        - type: paragraph
+          children:
+            - text: "    st.pydeck_chart("
+        - type: paragraph
+          children:
+            - text: "        pdk.Deck("
+        - type: paragraph
+          children:
+            - text: "            map_style=None,"
+        - type: paragraph
+          children:
+            - text: "            initial_view_state=pdk.ViewState("
+        - type: paragraph
+          children:
+            - text: '                latitude=predictions["LATITUDE"][0],'
+        - type: paragraph
+          children:
+            - text: '                longitude=predictions["LONGITUDE"][0],'
+        - type: paragraph
+          children:
+            - text: "                zoom=11,"
+        - type: paragraph
+          children:
+            - text: "                pitch=50,"
+        - type: paragraph
+          children:
+            - text: "            ),"
+        - type: paragraph
+          children:
+            - text: "            layers=["
+        - type: paragraph
+          children:
+            - text: "                pdk.Layer("
+        - type: paragraph
+          children:
+            - text: '                    "HexagonLayer",'
+        - type: paragraph
+          children:
+            - text: "                    data=predictions,"
+        - type: paragraph
+          children:
+            - text: '                    get_position="[LONGITUDE, LATITUDE]",'
+        - type: paragraph
+          children:
+            - text: "                    radius=200,"
+        - type: paragraph
+          children:
+            - text: "                    elevation_scale=4,"
+        - type: paragraph
+          children:
+            - text: "                    elevation_range=[0, 1000],"
+        - type: paragraph
+          children:
+            - text: "                    pickable=True,"
+        - type: paragraph
+          children:
+            - text: "                    extruded=True,"
+        - type: paragraph
+          children:
+            - text: "                ),"
+        - type: paragraph
+          children:
+            - text: "                pdk.Layer("
+        - type: paragraph
+          children:
+            - text: '                    "ScatterplotLayer",'
+        - type: paragraph
+          children:
+            - text: "                    data=predictions,"
+        - type: paragraph
+          children:
+            - text: '                    get_position="[LONGITUDE, LATITUDE]",'
+        - type: paragraph
+          children:
+            - text: '                    get_color="[200, 30, 0, 160]",'
+        - type: paragraph
+          children:
+            - text: "                    get_radius=200,"
+        - type: paragraph
+          children:
+            - text: "                ),"
+        - type: paragraph
+          children:
+            - text: "            ],"
+        - type: paragraph
+          children:
+            - text: "        )"
+        - type: paragraph
+          children:
+            - text: "    )"
+        - type: paragraph
+          children:
+            - text: "    "
+        - type: paragraph
+          children:
+            - text: '    max_x = predictions.loc[predictions["PRED_SHIFT_SALES"].idxmax()]'
+        - type: paragraph
+          children:
+            - text: '    st.write("Maximum Predicted Sales are expected at the following location:", max_x)'
+        - type: paragraph
+          children:
+            - text: "    #st.dataframe(predictions_sdf)"
+        - type: paragraph
+          children:
+            - text: "    "
+        - type: paragraph
+          children:
+            - text: '    location_id = max_x["LOCATION_ID"]'
+        - type: paragraph
+          children:
+            - text: '    lat = max_x["LATITUDE"]'
+        - type: paragraph
+          children:
+            - text: '    long = max_x["LONGITUDE"]'
+        - type: paragraph
+          children:
+            - text: ""
+        - type: paragraph
+          children:
+            - text: '    st.subheader("The following chart is generated using the st_point and st_distance Snowflake Geospatial features")'
+        - type: paragraph
+          children:
+            - text: ""
+        - type: paragraph
+          children:
+            - text: "    if n_trucks == 1:"
+        - type: paragraph
+          children:
+            - text: '        st.write("Have your only food truck positioned at Location ID ", location_id, " to maximize SHIFT_SALES")'
+        - type: paragraph
+          children:
+            - text: "    elif n_trucks > 1:"
+        - type: paragraph
+          children:
+            - text: "        best_locations = [location_id]"
+        - type: paragraph
+          children:
+            - text: "        available_locations_sdf = predictions_sdf"
+        - type: paragraph
+          children:
+            - text: "    "
+        - type: paragraph
+          children:
+            - text: "        st_distance = F.function('st_distance')"
+        - type: paragraph
+          children:
+            - text: "        st_point = F.function('st_point')"
+        - type: paragraph
+          children:
+            - text: "    "
+        - type: paragraph
+          children:
+            - text: "        for truck_n in np.arange(0,n_trucks - 1):"
+        - type: paragraph
+          children:
+            - text: '            available_locations_sdf = available_locations_sdf.with_column("DISTANCE_TO_TRUCK", '
+        - type: paragraph
+          children:
+            - text: "                                        st_distance("
+        - type: paragraph
+          children:
+            - text: "                                            st_point(F.lit(float(long)), F.lit(float(lat))),"
+        - type: paragraph
+          children:
+            - text: '                                            st_point(F.col("LONGITUDE"), F.col("LATITUDE"))'
+        - type: paragraph
+          children:
+            - text: "                                        )/1609"
+        - type: paragraph
+          children:
+            - text: '                                       ).filter(F.col("DISTANCE_TO_TRUCK") >= range/1.609).order_by("PRED_SHIFT_SALES", ascending=False)'
+        - type: paragraph
+          children:
+            - text: "            max_x = available_locations_sdf.limit(1).to_pandas()"
+        - type: paragraph
+          children:
+            - text: "            try:"
+        - type: paragraph
+          children:
+            - text: '                location_id = max_x["LOCATION_ID"].iloc[0]'
+        - type: paragraph
+          children:
+            - text: '                lat = max_x["LATITUDE"].iloc[0]'
+        - type: paragraph
+          children:
+            - text: '                long = max_x["LONGITUDE"].iloc[0]'
+        - type: paragraph
+          children:
+            - text: "            except:"
+        - type: paragraph
+          children:
+            - text: "                break"
+        - type: paragraph
+          children:
+            - text: "            best_locations.append(location_id)"
+        - type: paragraph
+          children:
+            - text: ""
+        - type: paragraph
+          children:
+            - text: ""
+        - type: paragraph
+          children:
+            - text: '        selected_locations = predictions[predictions["LOCATION_ID"].isin(best_locations)]'
+        - type: paragraph
+          children:
+            - text: "        st.map(selected_locations)"
+        - type: paragraph
+          children:
+            - text: "        st.dataframe(selected_locations)"
+appLayout:
+  visibleMetadataFields:
+    - NAME
+    - DESCRIPTION
+    - AUTHOR
+    - LAST_EDITED
+    - LAST_RUN
+    - CATEGORIES
+    - STATUS
+    - TABLE_OF_CONTENTS
+  fullWidth: false
+  tabs:
+    - name: Overview
+      rows:
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: 4a55bcca-9113-4d6f-b9d1-1336a384f974
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: 3c11cdf2-eddd-43c7-bfd7-9a1ee6231e77
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: a9e2367b-f525-4ede-ac00-c78ba59d6d1c
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: 109e4010-c281-43be-84bb-b6bb4f59ee60
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: d1e15381-fd83-46b2-941c-5d3b79e7bc87
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: 5426ec92-c037-45ad-b647-491881ef6de6
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: 059958c8-a061-4f48-a7db-6fd49579c9b4
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: 139fad96-c280-48a8-ad58-43df0bed2e65
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: 228006cf-75f0-4c2e-9553-0f85e0752973
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: d6ef2523-904c-41d0-ad4b-6dd64acd59a4
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: 8759df09-92ce-427d-978c-575091964139
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: 3ebf32b4-bbcc-49aa-84e2-57a5f2b0178c
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+    - name: Part 1
+      rows:
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: 8bdaa67c-79c6-475e-a816-98f7e25381e1
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: dda9d478-86b3-4170-b446-c7d1d5a35be2
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: 18211f81-70d4-4591-9f09-e909a63da79c
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: a2f3c2c4-d9ed-4d01-9c6c-02a62804e3a2
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: 9ec6a7e2-5a3d-4362-93ab-40c0e83a75d0
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: 8c0561aa-a583-4edc-9ba7-3b1551237178
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: 5185f577-df5e-497d-81bf-e618909158dd
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: f715530a-ca89-4ada-8f87-41e4cfce288b
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: 69ed18ce-78c8-4d2e-afe1-b2d1196d6509
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: 3a01b778-5a4d-4677-a090-fdf589e701ed
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: 73b55a0d-37de-406a-8eba-779f3529e2ff
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: 8566fb77-e675-497c-ba89-51be6c869ad8
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: fea56832-0510-418c-bfa6-cb740e060771
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: 4804a6ca-3b8c-47b6-ae61-cffcbcfb0a1f
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: 640ef080-3efa-4e9d-acc2-fe35059ce316
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: 9d6df2be-06d1-44c4-844b-ac1bffa384a7
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: 0108dd52-9652-4305-b796-353d48a3756a
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: ace910f9-42c6-47ec-a2af-07e584e4c485
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: e97a6816-f8c1-4770-9bad-bfdbcacede26
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: a05b1bd9-6128-4fc2-b6f5-781e67ce7931
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: 35535476-33d9-45a7-af18-c63bc3e98439
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: 6b6e54fc-7aa1-47f1-a40f-54cba6cfd376
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: 16c7bddb-d5cb-47d9-9c3d-925109133ccb
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: 7b3e9950-fe3a-4ebf-926c-8fe544b45ae5
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: 0477c5d1-148c-402c-89cb-b2ea5cc25af0
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: eb2dd1a8-bc1f-49d2-b6d9-767f3952dbcc
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: 99c2f927-f989-4347-a20e-cd6dd304d98c
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: dd8f56cf-8235-4208-acf2-3f229f528673
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: 3a0229d1-5c6f-412d-b7ca-e3d0a48518a7
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: ab0a7f9c-06a5-4292-90e9-6a8d1744fb81
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: 9dc28a0b-5a08-46f9-abcf-0746e022f05b
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: 137706ec-92ad-44c8-848f-0735bdd993d2
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: 6de77476-e8a8-46bb-b7b4-2c91de7b03ce
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: 7d7971de-9e08-4a85-8511-1fd65cbf91f6
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: da6b4977-7ffc-432d-b4ea-1a6bae838a74
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: 757f80fe-92d1-403e-bdd7-7540b1527be0
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+    - name: Part 2
+      rows:
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: 110bf4b0-4fc7-4111-8900-469dc3258294
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: 9132ae87-d904-46b5-99e4-c757fd550ad9
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: 828044ed-5a95-4aed-92a2-d0fd42e89296
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: 41eed886-f4bf-47a9-bb1e-6bfccd77858b
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: b2290009-7270-4a3c-b30d-91378783144b
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: 6877ce55-539b-487e-89cd-fa68a35c99a5
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: 5b0ea4e0-40d0-44ab-a127-f209919e4275
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: b814fa9f-ab45-4694-a780-b96e62a7e5e0
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: e4d0c9f7-30a7-47ad-8b5e-ff51fc5fa6cd
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: 1c3502ed-bb61-49f1-853e-ef7702aed997
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+    - name: Part 3
+      rows:
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: 864a168e-cfd5-46af-9770-aa9a5612a032
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: 0bd565df-b93c-4d2b-b97f-296609045178
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: 6c4c35bf-51d6-48b2-b51f-4f2616ae6e24
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: fba56721-7c35-4dc6-b0c4-6f2b64582f05
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: 3c3c7220-6c29-4626-a57e-0b0751f74358
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: b4e8fdcf-43fe-44c0-8726-00d4f2f01954
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: 9c9bb81e-49e4-423b-91e0-34c57a5fef9b
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: ec19d463-cc09-46a9-baf2-fb1e4eeff3fa
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: de350f0d-dd01-4e41-b3a8-e4d63b2da9e5
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: 5eb87b02-597e-4550-91e9-3dd8cfa19d23
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: 1228aec5-d1c7-4e4e-bbcf-b8eb2b9129bb
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: 1b6e3f63-9c10-4783-ab00-01d765e0b58d
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: dce35da1-97cf-48f0-9c1b-1daa4ebe49d5
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: cbd2565b-2201-4fe3-a77c-5393bb864aee
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: c567e75e-4b4b-4004-8d68-e43b2094f8ee
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: cfd8827b-96cc-4a5e-a5ed-ed80790be483
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: f483147f-f4d6-4329-9ced-49d67b0279f9
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: 962db10c-6f13-4025-80c0-2e1265be39f2
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: f9249225-ebc6-44f7-994e-8a5ca6bd914d
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+    - name: Part 4
+      rows:
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: 316bddec-f6ad-4309-a0ae-8ae67eeac196
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: b32ef927-602b-4886-94a4-268da1294aa1
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: 9cd3e41b-73a7-4daa-9ad0-cf6163dcda60
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: 09844e0d-db11-4146-913b-29fea5d56590
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: e395601c-1887-49a4-b6ab-4e229d626728
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: 16f3fe65-411f-4e44-ba21-6cc56ebf6459
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: 25667b1d-3113-480a-ae7b-62b2d3f17482
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: 0e59d523-3ab3-4163-b6ca-fcca05bc8f5b
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: ea305671-78eb-49b3-80de-f302722e0753
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: 3cb47fe0-6ad2-4a45-8a00-4725136e760b
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: 582a20df-26a6-4038-85cc-3eb895259360
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+    - name: Part 5
+      rows:
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: 20fb3d53-b0df-42bf-b7ef-00ecaaf6224d
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: a6666cbe-d3ce-4cea-b4d3-b10d90d11831
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: f423a573-2d85-4f4f-8901-f2ccbd019207
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+sharedFilters: []
