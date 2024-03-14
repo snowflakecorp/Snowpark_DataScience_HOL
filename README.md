@@ -102,7 +102,7 @@ During this Snowpark Hands-on-Workshop, your customer will:
 ## Snowpark Data Science Hands-on-Workshop includes two skill-level notebooks for participants to choose from based on your Snowpark and Python experience:
 
 **- Easy Path: directions and code is ready to be executed**
-- [**Snowflake Notebooks** link](https://github.com/sfc-gh-DShaw98/Snowpark_DataScience_HOL/blob/main/ForCustomer/Notebooks/Snowflake_Notebook_EasyPath_app.ipynb):
+- [**Snowflake Notebooks** link](https://github.com/snowflakecorp/Snowpark_DataScience_HOL/blob/main/ForCustomer/Snowflake_Notebook_EasyPath_app.ipynb):
 
 
 <img src="https://github.com/snowflakecorp/Snowpark_DataScience_HOL/assets/120119246/facb0eb8-7def-4ee6-b11a-29e8ad8822a5" width=600>
@@ -119,13 +119,13 @@ During this Snowpark Hands-on-Workshop, your customer will:
 <img src="https://github.com/sfc-gh-DShaw98/Snowpark_DataScience_HOL/assets/120119246/dba6c410-c3a3-473a-91c6-ebfd1e2dc341" width=600>
 
   
-- [**Jupyter** notebook link](https://github.com/sfc-gh-DShaw98/Snowpark_DataScience_HOL/blob/main/ForCustomer/Notebooks/End-to-End%20Data%20Science%20using%20Snowpark%20-%20Easy%20Path.ipynb):
+- [**Jupyter** notebook link](https://github.com/snowflakecorp/Snowpark_DataScience_HOL/blob/main/ForCustomer/End-to-End%20Data%20Science%20using%20Snowpark%20-%20Easy%20Path.ipynb):
 
 <img src="https://github.com/sfc-gh-DShaw98/Snowpark_DataScience_HOL/assets/120119246/79988a20-e518-4518-b025-e92c7e421438" width=600>
 
 
 **- Intermediate Path: directions and some critical code is missing**
-- [**Snowflake Notebooks** link](https://github.com/sfc-gh-DShaw98/Snowpark_DataScience_HOL/blob/main/ForCustomer/Notebooks/Snowflake_Notebook_IntermediatePath_app.ipynb):
+- [**Snowflake Notebooks** link](https://github.com/snowflakecorp/Snowpark_DataScience_HOL/blob/main/ForCustomer/Snowflake_Notebook_IntermediatePath_app.ipynb):
 
 <img src="https://github.com/sfc-gh-DShaw98/Snowpark_DataScience_HOL/assets/120119246/ad10f4dd-35a1-4426-b9b4-770895c76c04" width=600>
 
@@ -139,6 +139,6 @@ During this Snowpark Hands-on-Workshop, your customer will:
 <img src="https://github.com/sfc-gh-DShaw98/Snowpark_DataScience_HOL/assets/120119246/d7406579-cb24-40bb-a5bf-bbb4556c3b95" width=600>
 
   
-- [**Jupyter** notebook link](https://github.com/sfc-gh-DShaw98/Snowpark_DataScience_HOL/blob/main/ForCustomer/Notebooks/End-to-End%20Data%20Science%20using%20Snowpark%20-%20Intermediate%20Path.ipynb):
+- [**Jupyter** notebook link](https://github.com/snowflakecorp/Snowpark_DataScience_HOL/blob/main/ForCustomer/End-to-End%20Data%20Science%20using%20Snowpark%20-%20Intermediate%20Path.ipynb):
 
 <img src="https://github.com/sfc-gh-DShaw98/Snowpark_DataScience_HOL/assets/120119246/9de5a014-2b12-48d6-a433-b2fbaae7498f" width=600>
