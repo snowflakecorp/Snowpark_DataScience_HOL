@@ -30,7 +30,7 @@ The **"Intermediate Path"** is recommended to engage Python-savvy attendees. The
 # Two lab levels are available for participants to choose from based on Snowpark and Python experience:
 
 **- Easy Path: directions and code is ready to be executed**
-- [**Snowflake Notebooks** link](https://github.com/sfc-gh-DShaw98/Snowpark_DataScience_HOL/blob/main/ForCustomer/Notebooks/Snowflake_Notebook_EasyPath_app.ipynb):
+- [**Snowflake Notebooks** link](https://github.com/snowflakecorp/Snowpark_DataScience_HOL/blob/main/ForCustomer/Snowflake_Notebook_EasyPath_app.ipynb):
   
   <img src="https://github.com/sfc-gh-DShaw98/Snowpark_DataScience_HOL/assets/120119246/241d436f-f265-4a10-a75e-e6acadee500d" width=600>
   
@@ -44,12 +44,12 @@ The **"Intermediate Path"** is recommended to engage Python-savvy attendees. The
  <img src="https://github.com/sfc-gh-DShaw98/Snowpark_DataScience_HOL/assets/120119246/dba6c410-c3a3-473a-91c6-ebfd1e2dc341" width=600>
 
   
-- [**Jupyter** notebook link](https://github.com/sfc-gh-DShaw98/Snowpark_DataScience_HOL/blob/main/ForCustomer/Notebooks/End-to-End%20Data%20Science%20using%20Snowpark%20-%20Easy%20Path.ipynb):
+- [**Jupyter** notebook link](https://github.com/snowflakecorp/Snowpark_DataScience_HOL/blob/main/ForCustomer/End-to-End%20Data%20Science%20using%20Snowpark%20-%20Easy%20Path.ipynb):
 
   <img src="https://github.com/sfc-gh-DShaw98/Snowpark_DataScience_HOL/assets/120119246/79988a20-e518-4518-b025-e92c7e421438" width=600>
 
 **- Intermediate Path: directions and some critical code is missing**
-- [**Snowflake Notebooks** link](https://github.com/sfc-gh-DShaw98/Snowpark_DataScience_HOL/blob/main/ForCustomer/Notebooks/Snowflake_Notebook_IntermediatePath_app.ipynb):
+- [**Snowflake Notebooks** link](https://github.com/snowflakecorp/Snowpark_DataScience_HOL/blob/main/ForCustomer/Snowflake_Notebook_IntermediatePath_app.ipynb):
 
  <img src="https://github.com/sfc-gh-DShaw98/Snowpark_DataScience_HOL/assets/120119246/ad10f4dd-35a1-4426-b9b4-770895c76c04" width=600>
  
@@ -63,13 +63,13 @@ The **"Intermediate Path"** is recommended to engage Python-savvy attendees. The
   <img src="https://github.com/sfc-gh-DShaw98/Snowpark_DataScience_HOL/assets/120119246/d7406579-cb24-40bb-a5bf-bbb4556c3b95" width=600>
 
   
-- [**Jupyter** notebook link](https://github.com/sfc-gh-DShaw98/Snowpark_DataScience_HOL/blob/main/ForCustomer/Notebooks/End-to-End%20Data%20Science%20using%20Snowpark%20-%20Intermediate%20Path.ipynb):
+- [**Jupyter** notebook link](https://github.com/snowflakecorp/Snowpark_DataScience_HOL/blob/main/ForCustomer/End-to-End%20Data%20Science%20using%20Snowpark%20-%20Intermediate%20Path.ipynb):
 
   <img src="https://github.com/sfc-gh-DShaw98/Snowpark_DataScience_HOL/assets/120119246/9de5a014-2b12-48d6-a433-b2fbaae7498f" width=600>
 
 
 # Please following the following instructions if you are using a Hex notebook for the workshop
-Note: Hex is already configured with all the necessary Python libraries. If you select Jupyter or another Python IDE, ensure your Python environment includes [repo_meta.yaml](https://github.com/sfc-gh-DShaw98/Snowpark_DataScience_HOL/blob/main/repo_meta.yaml) configurations.
+Note: Hex is already configured with all the necessary Python libraries. If you select Jupyter or another Python IDE, ensure your Python environment includes [repo_meta.yaml](https://github.com/snowflakecorp/Snowpark_DataScience_HOL/blob/main/.github/repo_meta.yaml) configurations.
   
 **Step 1:** choose the lab difficulty level and access the corresponding notebook
 - [Easy Path](https://app.hex.tech/snowflake/hex/77904453-b834-455e-936d-c694ee757fe3/latest)
@@ -81,7 +81,7 @@ Note: Hex is already configured with all the necessary Python libraries. If you 
 
 **Step 3:** complete the Hex connection details
 - <img src="https://github.com/sfc-gh-DShaw98/Snowpark_DataScience_HOL/assets/120119246/82b7a63c-021d-4b04-87aa-4a1b55e74a19" width=500>
-- See [hol_auth.json](https://github.com/sfc-gh-DShaw98/Snowpark_DataScience_HOL/blob/main/hol_auth.json) for Jupyter or other Python IDE connection configuration
+- See [hol_auth.json](https://github.com/snowflakecorp/Snowpark_DataScience_HOL/blob/main/ForCustomer/hol_auth.json) for Jupyter or other Python IDE connection configuration
 - <img src="https://github.com/snowflakecorp/Snowpark_DataScience_HOL/assets/120119246/3ea7ff52-38a1-47b4-ad1c-a9b6cbd56d62" width=500>
 
 - Name: [enter your Snowflake account]
