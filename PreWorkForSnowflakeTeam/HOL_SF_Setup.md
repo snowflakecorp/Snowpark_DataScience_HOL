@@ -43,7 +43,7 @@ set lab_pwd = 'Snowparki$@we$ome!'; --> enter an attendee password here
 show roles;
 
 -- Cleanup
-call utility.public.loopquery('drop database if exists HOLXXX;', $num_users);
+call utility.public.loopquery('drop database if exists HOL;', $num_users);
 call utility.public.loopquery('drop user if exists userXXX;', $num_users);
 call utility.public.loopquery('drop role if exists roleXXX;', $num_users);
 
