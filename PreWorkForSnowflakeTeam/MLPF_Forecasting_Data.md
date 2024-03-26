@@ -36,26 +36,6 @@ USE WAREHOUSE quickstart_wh;
 ALTER ACCOUNT
 SET SEARCH_PATH = '$current, $public, SNOWFLAKE.ML';
 
-USE ROLE ACCOUNTADMIN;
-
--- Create development database, schema for our work: 
-CREATE OR REPLACE DATABASE quickstart;
-CREATE OR REPLACE SCHEMA mlpf;
-
--- Use appropriate resources: 
-USE DATABASE quickstart;
-USE SCHEMA mlpf;
-
--- Create warehouse to work with: 
-CREATE OR REPLACE WAREHOUSE quickstart_wh;
-USE WAREHOUSE quickstart_wh;
-
--- Set search path for MLPFs:
-ALTER ACCOUNT
-SET SEARCH_PATH = '$current, $public, SNOWFLAKE.ML';
-
-
-USE ROLE ACCOUNTADMIN;
 
 -- Create a csv file format: 
 CREATE OR REPLACE FILE FORMAT frostbyte_tasty_bytes_dev.analytics.csv_ff
